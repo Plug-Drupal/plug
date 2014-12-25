@@ -8,11 +8,11 @@
 /**
  * Implements hook_menu().
  */
-function plugins_example_menu() {
-  $items['plugins/test'] = array(
+function plugs_example_menu() {
+  $items['plugs/test'] = array(
     'title' => 'Plugins example',
     'description' => 'Plugins example page.',
-    'page callback' => 'plugins_example_test_page',
+    'page callback' => 'plugs_example_test_page',
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
@@ -22,7 +22,8 @@ function plugins_example_menu() {
 /**
  * Page callback to test the plugins.
  */
-function plugins_example_test_page() {
+function plugs_example_test_page() {
+  // TODO: This $namespaces array should be generated automagically.
   $namespaces = new \ArrayObject(array(
     'Drupal\plugins_example' => drupal_get_path('module', 'plugins_example') . '/src',
   ));
