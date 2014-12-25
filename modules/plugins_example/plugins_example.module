@@ -23,9 +23,11 @@ function plugins_example_menu() {
  */
 function plugins_example_test_page() {
   $namespaces = new \ArrayObject(array(
-    'Drupal\plugins_example',
+    'Drupal\plugins_example' => drupal_get_path('module', 'plugins_example') . '/src',
   ));
-  $manager = new Drupal\plugins_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('food'));
-//  dpm($manager->getDefinitions());
+  $manager = new Drupal\plugins_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('name'));
+  foreach ($manager->getDefinitions() as $id => $plugin) {
+    dpm($manager->createInstance($id));
+  }
   return 'Hello world!';
 }

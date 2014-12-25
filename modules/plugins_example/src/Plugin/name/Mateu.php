@@ -14,6 +14,7 @@ use Drupal\plugins_example\Plugin\name\NameInterface;
  * @package Drupal\pugins_example\Plugins
  *
  * @Plugin(
+ *   id = "mateu",
  *   company = FALSE
  * )
  */
