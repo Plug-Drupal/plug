@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Module implementation file.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function plugins_example_menu() {
+  $items['plugins'] = array(
+    'title' => 'Plugins',
+    'page callback' => 'plugins_example_test_page',
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+/**
+ * Page callback to test the plugins.
+ */
+function plugins_example_test_page() {
+  $namespaces = new \ArrayObject(array(
+    'Drupal\plugins_example',
+  ));
+  $manager = new Drupal\plugins_example\FoodPluginManager($namespaces, new \DrupalDatabaseCache('food'));
+  return 'Hello world!';
+}
