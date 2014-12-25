@@ -24,7 +24,7 @@ class NamePluginManager extends DefaultPluginManager {
    *   Cache backend instance to use.
    */
   public function __construct(\Traversable $namespaces, \DrupalCacheInterface $cache_backend) {
-    parent::__construct('Plugin/name', $namespaces, 'Drupal\search\Plugin\name\NameInterface');
+    parent::__construct('Plugin/name', $namespaces, 'Drupal\plugins_example\Plugin\name\NameInterface');
     $this->setCacheBackend($cache_backend, 'name_plugins');
     $this->alterInfo('name_plugin');
   }

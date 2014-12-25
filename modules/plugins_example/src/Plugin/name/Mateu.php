@@ -5,9 +5,7 @@
  * Contains Drupal\pugins_example\Plugin\name\Mateu
  */
 
-namespace Drupal\pugins_example\Plugin\name;
-
-use Drupal\plugins_example\Plugin\name\NameInterface;
+namespace Drupal\plugins_example\Plugin\name;
 
 /**
  * Class Mateu
@@ -18,17 +16,8 @@ use Drupal\plugins_example\Plugin\name\NameInterface;
  *   company = FALSE
  * )
  */
-class Mateu implements NameInterface {
+class Mateu extends NameBase implements NameInterface {
 
   protected $name = 'Mateu';
-
-  /**
-   * {@inheritdoc}
-   */
-  public function displayName() {
-    return t('My name is: @name', array(
-      '@name' => $this->name,
-    ));
-  }
 
 }

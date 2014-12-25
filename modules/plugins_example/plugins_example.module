@@ -9,11 +9,12 @@
  * Implements hook_menu().
  */
 function plugins_example_menu() {
-  $items['plugins'] = array(
-    'title' => 'Plugins',
+  $items['plugins/test'] = array(
+    'title' => 'Plugins example',
+    'description' => 'Plugins example page.',
     'page callback' => 'plugins_example_test_page',
     'access callback' => TRUE,
-    'type' => MENU_CALLBACK,
+    'type' => MENU_NORMAL_ITEM,
   );
   return $items;
 }
@@ -26,8 +27,12 @@ function plugins_example_test_page() {
     'Drupal\plugins_example' => drupal_get_path('module', 'plugins_example') . '/src',
   ));
   $manager = new Drupal\plugins_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('name'));
+  $output = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
-    dpm($manager->createInstance($id));
+    // This is just a silly way to show how you can pass arbitrary configuration
+    // at runtime. If true, the name will be wrapped in <em></em>.
+    $random_bool = (bool) floor(mt_rand(0, 2));
+    $output[] = $manager->createInstance($id, array('em' => $random_bool))->displayName();
   }
-  return 'Hello world!';
+  return implode(', ', $output);
 }
