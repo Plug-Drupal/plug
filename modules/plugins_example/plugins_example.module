@@ -25,6 +25,7 @@ function plugins_example_test_page() {
   $namespaces = new \ArrayObject(array(
     'Drupal\plugins_example',
   ));
-  $manager = new Drupal\plugins_example\FoodPluginManager($namespaces, new \DrupalDatabaseCache('food'));
+  $manager = new Drupal\plugins_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('food'));
+//  dpm($manager->getDefinitions());
   return 'Hello world!';
 }

@@ -12,7 +12,7 @@ use Drupal\Core\Plugin\DefaultPluginManager;
 /**
  * SearchExecute plugin manager.
  */
-class FoodPluginManager extends DefaultPluginManager {
+class NamePluginManager extends DefaultPluginManager {
 
   /**
    * Constructs FoodPluginManager
@@ -24,8 +24,8 @@ class FoodPluginManager extends DefaultPluginManager {
    *   Cache backend instance to use.
    */
   public function __construct(\Traversable $namespaces, \DrupalCacheInterface $cache_backend) {
-    parent::__construct('Plugin/Search', $namespaces, 'Drupal\search\Plugin\SearchInterface', 'Drupal\search\Annotation\SearchPlugin');
-    $this->setCacheBackend($cache_backend, 'search_plugins');
-    $this->alterInfo('search_plugin');
+    parent::__construct('Plugin/name', $namespaces, 'Drupal\search\Plugin\name\NameInterface');
+    $this->setCacheBackend($cache_backend, 'name_plugins');
+    $this->alterInfo('name_plugin');
   }
 }

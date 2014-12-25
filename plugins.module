@@ -19,7 +19,7 @@ function plugins_xautoload($adapter) {
   $adapter->addPsr4(
   // The namespace.
     'Drupal\Core\\',
-    // Absolute path to the PSR-4 base directory.
-    'src/Drupal/Core'
+    // Path to the PSR-4 base directory.
+    'src/Core'
   );
 }
