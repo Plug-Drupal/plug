@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_xautoload()
+ * Implements hook_xautoload().
  *
  * Register additional classes, namespaces, autoload patterns, that are not
  * already registered by default.

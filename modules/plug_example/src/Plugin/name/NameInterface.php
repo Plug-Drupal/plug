@@ -13,6 +13,7 @@ interface NameInterface {
    * Displays a name.
    *
    * @return string
+   *   The name representation.
    */
   public function displayName();
 
