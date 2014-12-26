@@ -27,7 +27,7 @@ function plug_example_test_page() {
   $namespaces = new \ArrayObject(array(
     'Drupal\plug_example' => drupal_get_path('module', 'plug_example') . '/src',
   ));
-  $manager = new Drupal\plug_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('name'));
+  $manager = new Drupal\plug_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('cache'));
   $output = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration
