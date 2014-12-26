@@ -38,13 +38,6 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
   protected $cacheKey;
 
   /**
-   * An array of cache tags to use for the cached definitions.
-   *
-   * @var array
-   */
-  protected $cacheTags = array();
-
-  /**
    * Name of the alter hook if one should be invoked.
    *
    * @var string
@@ -162,7 +155,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    */
   protected function setCachedDefinitions($definitions) {
     if ($this->cacheBackend) {
-      $this->cacheBackend->set($this->cacheKey, $definitions, CACHE_PERMANENT, $this->cacheTags);
+      $this->cacheBackend->set($this->cacheKey, $definitions, CACHE_PERMANENT);
     }
     $this->definitions = $definitions;
   }

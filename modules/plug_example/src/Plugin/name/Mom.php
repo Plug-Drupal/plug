@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains Drupal\pugins_example\Plugin\name\Mom
+ * Contains Drupal\plug_example\Plugin\name\Mom
  */
 
 namespace Drupal\plug_example\Plugin\name;
 
 /**
  * Class Mom
- * @package Drupal\pugins_example\Plugins
+ * @package Drupal\plug_example\Plugins
  *
- * @Plugin(
+ * @Name(
  *   id = "mom",
  *   company = FALSE
  * )
