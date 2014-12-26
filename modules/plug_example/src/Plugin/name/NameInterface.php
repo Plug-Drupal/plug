@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\plugins_example\Plugin\name\NameInterface
+ * Contains Drupal\plug_example\Plugin\name\NameInterface
  */
 
-namespace Drupal\plugins_example\Plugin\name;
+namespace Drupal\plug_example\Plugin\name;
 
 interface NameInterface {
 

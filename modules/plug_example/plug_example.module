@@ -8,11 +8,11 @@
 /**
  * Implements hook_menu().
  */
-function plugs_example_menu() {
-  $items['plugs/test'] = array(
+function plug_example_menu() {
+  $items['plug/test'] = array(
     'title' => 'Plugins example',
     'description' => 'Plugins example page.',
-    'page callback' => 'plugs_example_test_page',
+    'page callback' => 'plug_example_test_page',
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
   );
@@ -22,12 +22,12 @@ function plugs_example_menu() {
 /**
  * Page callback to test the plugins.
  */
-function plugs_example_test_page() {
+function plug_example_test_page() {
   // TODO: This $namespaces array should be generated automagically.
   $namespaces = new \ArrayObject(array(
-    'Drupal\plugins_example' => drupal_get_path('module', 'plugins_example') . '/src',
+    'Drupal\plug_example' => drupal_get_path('module', 'plug_example') . '/src',
   ));
-  $manager = new Drupal\plugins_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('name'));
+  $manager = new Drupal\plug_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('name'));
   $output = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration

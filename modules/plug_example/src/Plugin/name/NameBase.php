@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Contains Drupal\plugins_example\Plugin\name\NameBase
+ * Contains Drupal\plug_example\Plugin\name\NameBase
  */
 
-namespace Drupal\plugins_example\Plugin\name;
+namespace Drupal\plug_example\Plugin\name;
 
 use Drupal\Component\Plugin\PluginBase;
 

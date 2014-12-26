@@ -5,7 +5,7 @@
  * Contains Drupal\pugins_example\Plugin\name\Mateu
  */
 
-namespace Drupal\plugins_example\Plugin\name;
+namespace Drupal\plug_example\Plugin\name;
 
 /**
  * Class Mateu

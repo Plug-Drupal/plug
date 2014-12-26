@@ -14,7 +14,7 @@
  * @param \Drupal\xautoload\Adapter\LocalDirectoryAdapter $adapter
  *   An adapter object that can register stuff into the class loader.
  */
-function plugs_xautoload($adapter) {
+function plug_xautoload($adapter) {
   // Register a namespace with PSR-4.
   $adapter->addPsr4(
   // The namespace.
