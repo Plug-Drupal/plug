@@ -2,16 +2,16 @@
 
 /**
  * @file
- * Contains Drupal\pugins_example\Plugin\name\Lullabot
+ * Contains Drupal\plug_example\Plugin\name\Lullabot
  */
 
 namespace Drupal\plug_example\Plugin\name;
 
 /**
  * Class Lullabot
- * @package Drupal\pugins_example\Plugins
+ * @package Drupal\plug_example\Plugin\name
  *
- * @Plugin(
+ * @Name(
  *   id = "lullabot",
  *   company = TRUE
  * )
