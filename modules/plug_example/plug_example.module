@@ -5,6 +5,9 @@
  * Module implementation file.
  */
 
+use \Drupal\Core\Plugin\DefaultPluginManager;
+use \Drupal\plug_example\NamePluginManager;
+
 /**
  * Implements hook_menu().
  */
@@ -23,11 +26,7 @@ function plug_example_menu() {
  * Page callback to test the plugins.
  */
 function plug_example_test_page() {
-  // TODO: This $namespaces array should be generated automagically.
-  $namespaces = new \ArrayObject(array(
-    'Drupal\plug_example' => drupal_get_path('module', 'plug_example') . '/src',
-  ));
-  $manager = new Drupal\plug_example\NamePluginManager($namespaces, new \DrupalDatabaseCache('cache'));
+  $manager = new NamePluginManager(DefaultPluginManager::getNamespaces(), new \DrupalDatabaseCache('cache'));
   $output = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration
