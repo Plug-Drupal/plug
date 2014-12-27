@@ -1,0 +1,76 @@
+<?php
+
+/**
+ * @file
+ * Contains \Drupal\plug_example\FruitPluginManager.
+ */
+
+namespace Drupal\plug_example;
+
+use Drupal\Core\Plugin\DefaultPluginManager;
+use Drupal\Core\Plugin\Factory\ContainerFactory;
+use Drupal\Core\Plugin\Discovery\YamlDiscovery;
+
+/**
+ * Name plugin manager.
+ */
+class FruitPluginManager extends DefaultPluginManager {
+
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaults = array(
+    // Human readable label for the fruit.
+    'label' => '',
+    // The amount of sugar in the fruit.
+    'sugar' => '',
+    // Default class for breakpoint implementations.
+    'class' => 'Drupal\plug_example\Plugin\fruit\Fruit',
+    // The plugin id. Set by the plugin system based on the top-level YAML key.
+    'id' => '',
+  );
+
+  /**
+   * Constructs FruitPluginManager.
+   *
+   * @param \Traversable $namespaces
+   *   An object that implements \Traversable which contains the root paths
+   *   keyed by the corresponding namespace to look for plugin implementations.
+   * @param \DrupalCacheInterface $cache_backend
+   *   Cache backend instance to use.
+   */
+  public function __construct(\Traversable $namespaces, \DrupalCacheInterface $cache_backend) {
+    $this->discovery = new YamlDiscovery('fruits', $this->getModuleDirectories());
+    $this->factory = new ContainerFactory($this);
+    $this->alterInfo('fruit_plugin');
+    $this->setCacheBackend($cache_backend, 'fruit_plugins');
+  }
+
+  /**
+   * Helper function to get all the module directories.
+   *
+   * @return array
+   *   A list of module directories.
+   */
+  protected function getModuleDirectories() {
+    $directories = array();
+    foreach (module_list() as $module) {
+      $directories[$module] = drupal_get_path('module', $module);
+    }
+    return $directories;
+  }
+
+  /**
+   * FruitPluginManager factory method.
+   *
+   * @param string $bin
+   *   The cache bin for the plugin manager.
+   *
+   * @return FruitPluginManager
+   *   The created manager.
+   */
+  public static function create($bin = 'cache') {
+    return new static(DefaultPluginManager::getNamespaces(), _cache_get_object($bin));
+  }
+
+}
