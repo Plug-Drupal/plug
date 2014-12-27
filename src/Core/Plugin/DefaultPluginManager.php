@@ -208,24 +208,24 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    * Generates the array of available namespaces for plugins.
    *
    * @return \ArrayObject
-   *   The generated array of namespaces
+   *   The generated array of namespaces.
    */
   public static function getNamespaces() {
     $namespaces = &drupal_static(__FUNCTION__);
-    if (!isset($namespaces)) {
-      if ($cache = cache_get('plugin_namespaces')) {
-        $namespaces = $cache->data;
-      }
-      else {
-        $namespaces = array();
-        foreach (module_list() as $module) {
-          $namespaces['Drupal\\' . $module] = drupal_get_path('module', $module) . '/src';
-        }
-        $namespaces = new \ArrayObject($namespaces);
-        cache_set('plugin_namespaces', $namespaces);
-      }
+    if (isset($namespaces)) {
+      return new \ArrayObject($namespaces);
     }
-    return $namespaces;
+    if ($cache = cache_get('plugin_namespaces')) {
+      $namespaces = $cache->data;
+      return new \ArrayObject($namespaces);
+    }
+    $names = array();
+    foreach (module_list() as $module) {
+      $names['Drupal\\' . $module] = drupal_get_path('module', $module) . '/src';
+    }
+    $namespaces = $names;
+    cache_set('plugin_namespaces', $namespaces);
+    return new \ArrayObject($namespaces);
   }
 
 }

@@ -26,14 +26,13 @@ function plug_example_menu() {
  * Page callback to test the plugins.
  */
 function plug_example_test_page() {
-  $manager = new NamePluginManager(DefaultPluginManager::getNamespaces(), new \DrupalDatabaseCache('cache'));
+  $manager = NamePluginManager::create();
   $output = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration
     // at runtime. If true, the name will be wrapped in <em></em>.
     $random_bool = (bool) floor(mt_rand(0, 2));
     $output[] = $manager->createInstance($id, array('em' => $random_bool))->displayName();
-
   }
   return implode(', ', $output);
 }
