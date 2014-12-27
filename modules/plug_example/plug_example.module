@@ -27,12 +27,13 @@ function plug_example_menu() {
  */
 function plug_example_test_page() {
   $manager = NamePluginManager::create();
-  $output = array();
+  $items = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration
     // at runtime. If true, the name will be wrapped in <em></em>.
     $random_bool = (bool) floor(mt_rand(0, 2));
-    $output[] = $manager->createInstance($id, array('em' => $random_bool))->displayName();
+    $name = $manager->createInstance($id, array('em' => $random_bool));
+    $items[] = $name->displayName() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
   }
-  return implode(', ', $output);
+  return theme('item_list', array('items' => $items));
 }

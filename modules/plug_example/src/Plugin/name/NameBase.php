@@ -26,7 +26,7 @@ abstract class NameBase extends PluginBase implements NameInterface {
     $replacement = $this->configuration['em'] ? '%name' : '@name';
     if ($definition['company']) {
 
-      return t($replacement . ' Inc.', array(
+      return t('Company name: ' . $replacement . ' Inc.', array(
         $replacement => $this->name,
       ));
     }
