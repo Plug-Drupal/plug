@@ -5,8 +5,8 @@
  * Module implementation file.
  */
 
-use \Drupal\Core\Plugin\DefaultPluginManager;
 use \Drupal\plug_example\NamePluginManager;
+use \Drupal\plug_example\FruitPluginManager;
 
 /**
  * Implements hook_menu().
@@ -15,17 +15,31 @@ function plug_example_menu() {
   $items['plug/test'] = array(
     'title' => 'Plugins example',
     'description' => 'Plugins example page.',
-    'page callback' => 'plug_example_test_page',
+    'page callback' => 'plug_example_annotation_test_page',
     'access callback' => TRUE,
     'type' => MENU_NORMAL_ITEM,
+  );
+  $items['plug/test/annotation'] = array(
+    'title' => 'Annotation',
+    'description' => 'Plugins annotation page.',
+    'page callback' => 'plug_example_annotation_test_page',
+    'access callback' => TRUE,
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['plug/test/yaml'] = array(
+    'title' => 'YAML',
+    'description' => 'Plugins YAML page.',
+    'page callback' => 'plug_example_yaml_test_page',
+    'access callback' => TRUE,
+    'type' => MENU_LOCAL_TASK,
   );
   return $items;
 }
 
 /**
- * Page callback to test the plugins.
+ * Page callback to test annotation the plugins.
  */
-function plug_example_test_page() {
+function plug_example_annotation_test_page() {
   $manager = NamePluginManager::create();
   $items = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
@@ -34,6 +48,22 @@ function plug_example_test_page() {
     $random_bool = (bool) floor(mt_rand(0, 2));
     $name = $manager->createInstance($id, array('em' => $random_bool));
     $items[] = $name->displayName() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
+  }
+  return theme('item_list', array('items' => $items));
+}
+
+/**
+ * Page callback to test the plugins.
+ */
+function plug_example_yaml_test_page() {
+  $manager = FruitPluginManager::create();
+  $items = array();
+  foreach ($manager->getDefinitions() as $id => $plugin) {
+    // This is just a silly way to show how you can pass arbitrary configuration
+    // at runtime. If true, the name will be wrapped in <em></em>.
+    $random_bool = (bool) floor(mt_rand(0, 2));
+    $name = $manager->createInstance($id, array('em' => $random_bool));
+    $items[] = $name->display() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
   }
   return theme('item_list', array('items' => $items));
 }
