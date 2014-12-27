@@ -1,0 +1,13 @@
+apple:
+  label: Apple
+  sugar: 'low'
+orange:
+  label: Orange
+  sugar: 'medium'
+melon:
+  label: Melon
+  sugar: 'high'
+mamoncillo:
+  label: Mamoncillo
+  sugar: 'high'
+  slimy: true
