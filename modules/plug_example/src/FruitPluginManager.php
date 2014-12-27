@@ -24,6 +24,8 @@ class FruitPluginManager extends DefaultPluginManager {
     'label' => '',
     // The amount of sugar in the fruit.
     'sugar' => '',
+    // Is the fruit slimy?
+    'slimy' => FALSE,
     // Default class for breakpoint implementations.
     'class' => 'Drupal\plug_example\Plugin\fruit\Fruit',
     // The plugin id. Set by the plugin system based on the top-level YAML key.
