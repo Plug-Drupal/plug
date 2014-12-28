@@ -10,48 +10,74 @@ namespace Drupal\plug\Util;
 class Module {
 
   /**
-   * Generates the array of available namespaces for plugins.
+   * Generates the cached array of available namespaces for plugins.
    *
    * @return \ArrayObject
    *   The generated array of namespaces.
    */
   public static function getNamespaces() {
-    $namespaces = &drupal_static(__FUNCTION__);
-    if (isset($namespaces)) {
-      return new \ArrayObject($namespaces);
-    }
-    if ($cache = cache_get('plugin_namespaces')) {
-      $namespaces = $cache->data;
-      return new \ArrayObject($namespaces);
-    }
-    $namespaces = array();
-    foreach (static::getModuleDirectories() as $module => $path) {
-      $namespaces['Drupal\\' . $module] = $path . '/src';
-    }
-    cache_set('plugin_namespaces', $namespaces);
-    return new \ArrayObject($namespaces);
+    return new \ArrayObject(static::memoize('moduleNamespaces'));
   }
 
   /**
-   * Helper function to get all the module directories.
+   * Generates the cached array of enabled module directories.
    *
    * @return array
    *   A list of module directories.
    */
   public static function getModuleDirectories() {
-    $directories = &drupal_static(__FUNCTION__);
-    if (isset($directories)) {
-      return $directories;
+    return static::memoize('moduleDirectories');
+  }
+
+  /**
+   * Memoize function to cache method results.
+   *
+   * @param string $method_name
+   *   The method to execute name.
+   *
+   * @return array
+   *   The function result
+   */
+  protected static function memoize($method_name) {
+    $cache_name = drupal_strtolower($method_name);
+    $data = &drupal_static($cache_name);
+    if (isset($data)) {
+      return $data;
     }
-    if ($cache = cache_get('module_directories')) {
+    if ($cache = cache_get($cache_name)) {
       return $cache->data;
     }
+    $data = call_user_func_array(array(get_called_class(), $method_name), array());
+    cache_set($cache_name, $data);
+    return $data;
+  }
+
+  /**
+   * Gets the array of available namespaces for plugins.
+   *
+   * @return array
+   *   The generated array of namespaces.
+   */
+  protected static function moduleDirectories() {
     $directories = array();
     foreach (module_list() as $module) {
       $directories[$module] = drupal_get_path('module', $module);
     }
-    cache_set('module_directories', $directories);
     return $directories;
+  }
+
+  /**
+   * Gets all the module directories.
+   *
+   * @return array
+   *   A list of module directories.
+   */
+  protected static function moduleNamespaces() {
+    $namespaces = array();
+    foreach (static::getModuleDirectories() as $module => $path) {
+      $namespaces['Drupal\\' . $module] = $path . '/src';
+    }
+    return $namespaces;
   }
 
 }
