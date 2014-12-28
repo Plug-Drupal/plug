@@ -10,6 +10,7 @@ namespace Drupal\plug_example;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 use Drupal\Core\Plugin\Discovery\YamlDiscovery;
+use Drupal\plug\Util\Module;
 
 /**
  * Name plugin manager.
@@ -42,24 +43,10 @@ class FruitPluginManager extends DefaultPluginManager {
    *   Cache backend instance to use.
    */
   public function __construct(\Traversable $namespaces, \DrupalCacheInterface $cache_backend) {
-    $this->discovery = new YamlDiscovery('fruits', $this->getModuleDirectories());
+    $this->discovery = new YamlDiscovery('fruits', Module::getModuleDirectories());
     $this->factory = new ContainerFactory($this);
     $this->alterInfo('fruit_plugin');
     $this->setCacheBackend($cache_backend, 'fruit_plugins');
-  }
-
-  /**
-   * Helper function to get all the module directories.
-   *
-   * @return array
-   *   A list of module directories.
-   */
-  protected function getModuleDirectories() {
-    $directories = array();
-    foreach (module_list() as $module) {
-      $directories[$module] = drupal_get_path('module', $module);
-    }
-    return $directories;
   }
 
   /**
@@ -72,7 +59,7 @@ class FruitPluginManager extends DefaultPluginManager {
    *   The created manager.
    */
   public static function create($bin = 'cache') {
-    return new static(DefaultPluginManager::getNamespaces(), _cache_get_object($bin));
+    return new static(Module::getNamespaces(), _cache_get_object($bin));
   }
 
 }
