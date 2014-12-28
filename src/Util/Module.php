@@ -53,10 +53,10 @@ class Module {
   }
 
   /**
-   * Gets the array of available namespaces for plugins.
+   * Gets all the module directories.
    *
    * @return array
-   *   The generated array of namespaces.
+   *   A list of module directories.
    */
   protected static function directories() {
     $directories = array();
@@ -67,10 +67,10 @@ class Module {
   }
 
   /**
-   * Gets all the module directories.
+   * Gets the array of available namespaces for plugins.
    *
    * @return array
-   *   A list of module directories.
+   *   The generated array of namespaces.
    */
   protected static function namespaces() {
     $namespaces = array();
