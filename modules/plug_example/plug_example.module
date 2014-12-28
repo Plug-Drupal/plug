@@ -53,6 +53,15 @@ function plug_example_fruit_plugin_alter(&$plugins) {
 }
 
 /**
+ * Implements hook_name_plugin_alter().
+ *
+ * Modifies the plugin definition programmatically. John is not a company!
+ */
+function plug_example_name_plugin_alter(&$plugins) {
+  $plugins['john']['company'] = FALSE;
+}
+
+/**
  * Page callback to test annotation the plugins.
  */
 function plug_example_annotation_test_page() {
