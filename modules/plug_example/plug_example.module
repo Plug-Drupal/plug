@@ -37,6 +37,31 @@ function plug_example_menu() {
 }
 
 /**
+ * Implements hook_fruit_plugin_alter().
+ *
+ * Adds a new fruit plugin programmatically.
+ */
+function plug_example_fruit_plugin_alter(&$plugins) {
+  $plugins['banana'] = array(
+    'label' => 'Banana',
+    'sugar' => 'medium',
+    'slimy' => FALSE,
+    'id' => 'banana',
+    'provider' => 'plug_example',
+    'class' => 'Drupal\plug_example\Plugin\fruit\Fruit',
+  );
+}
+
+/**
+ * Implements hook_name_plugin_alter().
+ *
+ * Modifies the plugin definition programmatically. John is not a company!
+ */
+function plug_example_name_plugin_alter(&$plugins) {
+  $plugins['john']['company'] = FALSE;
+}
+
+/**
  * Page callback to test annotation the plugins.
  */
 function plug_example_annotation_test_page() {
@@ -72,6 +97,6 @@ function plug_example_test_page_content($manager, $method) {
   }
   return array(
     '#theme' => 'item_list',
-    '#items' => $items
+    '#items' => $items,
   );
 }
