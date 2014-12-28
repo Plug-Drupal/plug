@@ -59,7 +59,7 @@ class FruitPluginManager extends DefaultPluginManager {
    *   The created manager.
    */
   public static function create($bin = 'cache') {
-    return new static(DefaultPluginManager::getNamespaces(), _cache_get_object($bin));
+    return new static(Module::getNamespaces(), _cache_get_object($bin));
   }
 
 }
