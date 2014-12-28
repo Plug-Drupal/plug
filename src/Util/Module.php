@@ -24,11 +24,10 @@ class Module {
       $namespaces = $cache->data;
       return new \ArrayObject($namespaces);
     }
-    $names = array();
-    foreach (module_list() as $module) {
-      $names['Drupal\\' . $module] = drupal_get_path('module', $module) . '/src';
+    $namespaces = array();
+    foreach (static::getModuleDirectories() as $module => $path) {
+      $namespaces['Drupal\\' . $module] = $path . '/src';
     }
-    $namespaces = $names;
     cache_set('plugin_namespaces', $namespaces);
     return new \ArrayObject($namespaces);
   }
@@ -40,10 +39,18 @@ class Module {
    *   A list of module directories.
    */
   public static function getModuleDirectories() {
+    $directories = &drupal_static(__FUNCTION__);
+    if (isset($directories)) {
+      return $directories;
+    }
+    if ($cache = cache_get('module_directories')) {
+      return $cache->data;
+    }
     $directories = array();
     foreach (module_list() as $module) {
       $directories[$module] = drupal_get_path('module', $module);
     }
+    cache_set('module_directories', $directories);
     return $directories;
   }
 
