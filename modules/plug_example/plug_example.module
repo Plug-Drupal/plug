@@ -41,15 +41,7 @@ function plug_example_menu() {
  */
 function plug_example_annotation_test_page() {
   $manager = NamePluginManager::create();
-  $items = array();
-  foreach ($manager->getDefinitions() as $id => $plugin) {
-    // This is just a silly way to show how you can pass arbitrary configuration
-    // at runtime. If true, the name will be wrapped in <em></em>.
-    $random_bool = (bool) floor(mt_rand(0, 2));
-    $name = $manager->createInstance($id, array('em' => $random_bool));
-    $items[] = $name->displayName() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
-  }
-  return theme('item_list', array('items' => $items));
+  return plug_example_test_page_content($manager, 'displayName');
 }
 
 /**
@@ -57,13 +49,29 @@ function plug_example_annotation_test_page() {
  */
 function plug_example_yaml_test_page() {
   $manager = FruitPluginManager::create();
+  return plug_example_test_page_content($manager, 'display');
+}
+
+/**
+ * Generates the plug_example page content.
+ *
+ * @param \Drupal\Component\Plugin\PluginManagerInterface $manager
+ *   The Plugin manager.
+ *
+ * @return array
+ *   The test page render array.
+ */
+function plug_example_test_page_content($manager, $method) {
   $items = array();
   foreach ($manager->getDefinitions() as $id => $plugin) {
     // This is just a silly way to show how you can pass arbitrary configuration
     // at runtime. If true, the name will be wrapped in <em></em>.
     $random_bool = (bool) floor(mt_rand(0, 2));
     $name = $manager->createInstance($id, array('em' => $random_bool));
-    $items[] = $name->display() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
+    $items[] = $name->{$method}() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
   }
-  return theme('item_list', array('items' => $items));
+  return array(
+    '#theme' => 'item_list',
+    '#items' => $items
+  );
 }
