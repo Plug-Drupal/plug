@@ -16,7 +16,7 @@ class Module {
    *   The generated array of namespaces.
    */
   public static function getNamespaces() {
-    return new \ArrayObject(static::memoize('moduleNamespaces'));
+    return new \ArrayObject(static::memoize('namespaces'));
   }
 
   /**
@@ -25,8 +25,8 @@ class Module {
    * @return array
    *   A list of module directories.
    */
-  public static function getModuleDirectories() {
-    return static::memoize('moduleDirectories');
+  public static function getDirectories() {
+    return static::memoize('directories');
   }
 
   /**
@@ -39,7 +39,7 @@ class Module {
    *   The function result
    */
   protected static function memoize($method_name) {
-    $cache_name = drupal_strtolower($method_name);
+    $cache_name = 'module_' . drupal_strtolower($method_name);
     $data = &drupal_static($cache_name);
     if (isset($data)) {
       return $data;
@@ -58,7 +58,7 @@ class Module {
    * @return array
    *   The generated array of namespaces.
    */
-  protected static function moduleDirectories() {
+  protected static function directories() {
     $directories = array();
     foreach (module_list() as $module) {
       $directories[$module] = drupal_get_path('module', $module);
@@ -72,9 +72,9 @@ class Module {
    * @return array
    *   A list of module directories.
    */
-  protected static function moduleNamespaces() {
+  protected static function namespaces() {
     $namespaces = array();
-    foreach (static::getModuleDirectories() as $module => $path) {
+    foreach (static::getDirectories() as $module => $path) {
       $namespaces['Drupal\\' . $module] = $path . '/src';
     }
     return $namespaces;

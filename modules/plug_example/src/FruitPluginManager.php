@@ -43,7 +43,7 @@ class FruitPluginManager extends DefaultPluginManager {
    *   Cache backend instance to use.
    */
   public function __construct(\Traversable $namespaces, \DrupalCacheInterface $cache_backend) {
-    $this->discovery = new YamlDiscovery('fruits', Module::getModuleDirectories());
+    $this->discovery = new YamlDiscovery('fruits', Module::getDirectories());
     $this->factory = new ContainerFactory($this);
     $this->alterInfo('fruit_plugin');
     $this->setCacheBackend($cache_backend, 'fruit_plugins');
