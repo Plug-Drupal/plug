@@ -4,3 +4,5 @@ core = 7.x
 php = 5.4.2
 dependencies[] = composer_manager
 dependencies[] = xautoload (>= 7.x-5.0)
+
+files[] = plug.test
