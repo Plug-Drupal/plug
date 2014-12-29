@@ -43,15 +43,18 @@ class PlugBasicTest extends \DrupalWebTestCase {
       'system' => 'modules/system',
     );
 
-    $directories = Module::getModuleDirectories();
+    $directories = Module::getDirectories();
     $this->assertEqual($expected_values, array_intersect_assoc($directories, $expected_values));
+
+    $cached_data = cache_get('module_directories');
+    $this->assertEqual($expected_values, array_intersect_assoc($cached_data->data, $expected_values));
   }
 
   /**
    * Checks the Module::getNamespaces() method.
    */
   public function testModuleNamespaces() {
-    $expected_values = new ArrayObject(array(
+    $expected_values = array(
       'Drupal\\xautoload' => drupal_get_path('module', 'xautoload') . '/src',
       'Drupal\\composer_manager' => drupal_get_path('module', 'composer_manager') . '/src',
       'Drupal\\plug' => drupal_get_path('module', 'plug') . '/src',
@@ -61,11 +64,14 @@ class PlugBasicTest extends \DrupalWebTestCase {
       'Drupal\\node' => 'modules/node/src',
       'Drupal\\user' => 'modules/user/src',
       'Drupal\\standard' => 'profiles/standard/src',
-      'Drupal\\system' => 'profiles/system/src',
-    ));
+      'Drupal\\system' => 'modules/system/src',
+    );
 
     $namespaces = Module::getNamespaces();
-    $this->assertEqual($expected_values->getArrayCopy(), array_intersect_assoc($namespaces->getArrayCopy(), $expected_values->getArrayCopy()));
+    $this->assertEqual($expected_values, array_intersect_assoc($namespaces->getArrayCopy(), $expected_values));
+
+    $cached_data = cache_get('module_namespaces');
+    $this->assertEqual($expected_values, array_intersect_assoc($cached_data->data, $expected_values));
   }
 
 }
