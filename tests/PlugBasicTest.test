@@ -32,40 +32,19 @@ class PlugBasicTest extends \DrupalWebTestCase {
   public function testModuleDirectories() {
     $expected_values = array (
       'xautoload' => 'sites/all/modules/contrib/xautoload',
-      'block' => 'modules/block',
-      'color' => 'modules/color',
-      'comment' => 'modules/comment',
       'composer_manager' => 'sites/all/modules/contrib/composer_manager',
-      'contextual' => 'modules/contextual',
-      'dashboard' => 'modules/dashboard',
-      'dblog' => 'modules/dblog',
+      'plug' => 'sites/all/modules/plug',
       'field' => 'modules/field',
       'field_sql_storage' => 'modules/field/modules/field_sql_storage',
-      'field_ui' => 'modules/field_ui',
-      'file' => 'modules/file',
       'filter' => 'modules/filter',
-      'help' => 'modules/help',
-      'image' => 'modules/image',
-      'list' => 'modules/field/modules/list',
-      'menu' => 'modules/menu',
       'node' => 'modules/node',
-      'number' => 'modules/field/modules/number',
-      'options' => 'modules/field/modules/options',
-      'overlay' => 'modules/overlay',
-      'path' => 'modules/path',
-      'plug' => 'sites/all/modules/plug',
-      'rdf' => 'modules/rdf',
-      'search' => 'modules/search',
-      'shortcut' => 'modules/shortcut',
-      'system' => 'modules/system',
-      'taxonomy' => 'modules/taxonomy',
-      'text' => 'modules/field/modules/text',
-      'toolbar' => 'modules/toolbar',
       'user' => 'modules/user',
       'standard' => 'profiles/standard',
+      'system' => 'modules/system',
     );
 
-    $this->assertEqual($expected_values, Module::getModuleDirectories());
+    $directories = Module::getModuleDirectories();
+    $this->assertEqual($expected_values, array_intersect_assoc($directories, $expected_values));
   }
 
   /**
@@ -74,40 +53,19 @@ class PlugBasicTest extends \DrupalWebTestCase {
   public function testModuleNamespaces() {
     $expected_values = new ArrayObject(array(
       'Drupal\\xautoload' => 'sites/all/modules/contrib/xautoload/src',
-      'Drupal\\block' => 'modules/block/src',
-      'Drupal\\color' => 'modules/color/src',
-      'Drupal\\comment' => 'modules/comment/src',
       'Drupal\\composer_manager' => 'sites/all/modules/contrib/composer_manager/src',
-      'Drupal\\contextual' => 'modules/contextual/src',
-      'Drupal\\dashboard' => 'modules/dashboard/src',
-      'Drupal\\dblog' => 'modules/dblog/src',
+      'Drupal\\plug' => 'sites/all/modules/plug/src',
       'Drupal\\field' => 'modules/field/src',
       'Drupal\\field_sql_storage' => 'modules/field/modules/field_sql_storage/src',
-      'Drupal\\field_ui' => 'modules/field_ui/src',
-      'Drupal\\file' => 'modules/file/src',
       'Drupal\\filter' => 'modules/filter/src',
-      'Drupal\\help' => 'modules/help/src',
-      'Drupal\\image' => 'modules/image/src',
-      'Drupal\\list' => 'modules/field/modules/list/src',
-      'Drupal\\menu' => 'modules/menu/src',
       'Drupal\\node' => 'modules/node/src',
-      'Drupal\\number' => 'modules/field/modules/number/src',
-      'Drupal\\options' => 'modules/field/modules/options/src',
-      'Drupal\\overlay' => 'modules/overlay/src',
-      'Drupal\\path' => 'modules/path/src',
-      'Drupal\\plug' => 'sites/all/modules/plug/src',
-      'Drupal\\rdf' => 'modules/rdf/src',
-      'Drupal\\search' => 'modules/search/src',
-      'Drupal\\shortcut' => 'modules/shortcut/src',
-      'Drupal\\system' => 'modules/system/src',
-      'Drupal\\taxonomy' => 'modules/taxonomy/src',
-      'Drupal\\text' => 'modules/field/modules/text/src',
-      'Drupal\\toolbar' => 'modules/toolbar/src',
       'Drupal\\user' => 'modules/user/src',
       'Drupal\\standard' => 'profiles/standard/src',
+      'Drupal\\system' => 'profiles/system/src',
     ));
 
-    $this->assertEqual($expected_values, Module::getNamespaces());
+    $namespaces = Module::getNamespaces();
+    $this->assertEqual($expected_values, array_intersect_assoc($namespaces->getArrayCopy(), $expected_values->getArrayCopy()));
   }
 
 }
