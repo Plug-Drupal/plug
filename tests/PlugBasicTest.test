@@ -31,9 +31,9 @@ class PlugBasicTest extends \DrupalWebTestCase {
    */
   public function testModuleDirectories() {
     $expected_values = array (
-      'xautoload' => 'sites/all/modules/contrib/xautoload',
-      'composer_manager' => 'sites/all/modules/contrib/composer_manager',
-      'plug' => 'sites/all/modules/plug',
+      'xautoload' => drupal_get_path('module', 'xautoload'),
+      'composer_manager' => drupal_get_path('module', 'composer_manager'),
+      'plug' => drupal_get_path('module', 'plug'),
       'field' => 'modules/field',
       'field_sql_storage' => 'modules/field/modules/field_sql_storage',
       'filter' => 'modules/filter',
@@ -52,9 +52,9 @@ class PlugBasicTest extends \DrupalWebTestCase {
    */
   public function testModuleNamespaces() {
     $expected_values = new ArrayObject(array(
-      'Drupal\\xautoload' => 'sites/all/modules/contrib/xautoload/src',
-      'Drupal\\composer_manager' => 'sites/all/modules/contrib/composer_manager/src',
-      'Drupal\\plug' => 'sites/all/modules/plug/src',
+      'Drupal\\xautoload' => drupal_get_path('module', 'xautoload') . '/src',
+      'Drupal\\composer_manager' => drupal_get_path('module', 'composer_manager') . '/src',
+      'Drupal\\plug' => drupal_get_path('module', 'plug') . '/src',
       'Drupal\\field' => 'modules/field/src',
       'Drupal\\field_sql_storage' => 'modules/field/modules/field_sql_storage/src',
       'Drupal\\filter' => 'modules/filter/src',
@@ -65,7 +65,7 @@ class PlugBasicTest extends \DrupalWebTestCase {
     ));
 
     $namespaces = Module::getNamespaces();
-    $this->assertEqual($expected_values, array_intersect_assoc($namespaces->getArrayCopy(), $expected_values->getArrayCopy()));
+    $this->assertEqual($expected_values->getArrayCopy(), array_intersect_assoc($namespaces->getArrayCopy(), $expected_values->getArrayCopy()));
   }
 
 }
