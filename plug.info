@@ -6,4 +6,4 @@ dependencies[] = composer_manager
 dependencies[] = xautoload (>= 7.x-5.0)
 
 ; Tests
-files[] = test/PlugBasicTest.test
+files[] = tests/PlugBasicTest.test
