@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Basic tests cases for plug module.
+ */
+use \Drupal\plug\Util\Module;
+
+class PlugBasicTest extends \DrupalWebTestCase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'Plug tests',
+      'description' => 'Plug basic tests',
+      'group' => 'Plug',
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUp() {
+    parent::setUp('plug');
+  }
+
+  /**
+   * Checks the Module::getModuleDirectories() method.
+   */
+  public function testModuleDirectories() {
+    $expected_values = array (
+      'xautoload' => drupal_get_path('module', 'xautoload'),
+      'composer_manager' => drupal_get_path('module', 'composer_manager'),
+      'plug' => drupal_get_path('module', 'plug'),
+      'field' => 'modules/field',
+      'field_sql_storage' => 'modules/field/modules/field_sql_storage',
+      'filter' => 'modules/filter',
+      'node' => 'modules/node',
+      'user' => 'modules/user',
+      'standard' => 'profiles/standard',
+      'system' => 'modules/system',
+    );
+
+    $directories = Module::getModuleDirectories();
+    $this->assertEqual($expected_values, array_intersect_assoc($directories, $expected_values));
+  }
+
+  /**
+   * Checks the Module::getNamespaces() method.
+   */
+  public function testModuleNamespaces() {
+    $expected_values = new ArrayObject(array(
+      'Drupal\\xautoload' => drupal_get_path('module', 'xautoload') . '/src',
+      'Drupal\\composer_manager' => drupal_get_path('module', 'composer_manager') . '/src',
+      'Drupal\\plug' => drupal_get_path('module', 'plug') . '/src',
+      'Drupal\\field' => 'modules/field/src',
+      'Drupal\\field_sql_storage' => 'modules/field/modules/field_sql_storage/src',
+      'Drupal\\filter' => 'modules/filter/src',
+      'Drupal\\node' => 'modules/node/src',
+      'Drupal\\user' => 'modules/user/src',
+      'Drupal\\standard' => 'profiles/standard/src',
+      'Drupal\\system' => 'profiles/system/src',
+    ));
+
+    $namespaces = Module::getNamespaces();
+    $this->assertEqual($expected_values->getArrayCopy(), array_intersect_assoc($namespaces->getArrayCopy(), $expected_values->getArrayCopy()));
+  }
+
+}

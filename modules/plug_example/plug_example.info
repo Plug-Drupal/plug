@@ -3,3 +3,5 @@ description = A module example on how to use plugins.
 core = 7.x
 dependencies[] = plug
 
+; Tests
+files[] = tests/PlugExampleBasicTest.test

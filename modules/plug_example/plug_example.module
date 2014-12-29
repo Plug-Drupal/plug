@@ -92,8 +92,8 @@ function plug_example_test_page_content($manager, $method) {
     // This is just a silly way to show how you can pass arbitrary configuration
     // at runtime. If true, the name will be wrapped in <em></em>.
     $random_bool = (bool) floor(mt_rand(0, 2));
-    $name = $manager->createInstance($id, array('em' => $random_bool));
-    $items[] = $name->{$method}() . '<br /><pre>' . var_export($name, TRUE) . '</pre>';
+    $instance = $manager->createInstance($id, array('em' => $random_bool));
+    $items[] = $instance->{$method}() . '<br /><pre>' . var_export($instance, TRUE) . '</pre>';
   }
   return array(
     '#theme' => 'item_list',
