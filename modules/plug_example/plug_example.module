@@ -42,14 +42,15 @@ function plug_example_menu() {
  * Adds a new fruit plugin programmatically.
  */
 function plug_example_fruit_plugin_alter(&$plugins) {
-  $plugins['banana'] = array(
+  $plugin_manager = FruitPluginManager::create();
+  $base_definition = array(
     'label' => 'Banana',
     'sugar' => 'medium',
-    'slimy' => FALSE,
     'id' => 'banana',
     'provider' => 'plug_example',
-    'class' => 'Drupal\plug_example\Plugin\fruit\Fruit',
   );
+  $plugin_manager->processDefinition($base_definition);
+  $plugins[$base_definition['id']] = $base_definition;
 }
 
 /**
