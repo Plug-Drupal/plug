@@ -31,6 +31,7 @@ before_script:
   - drush --yes dl composer_manager
   - drush --yes dl xautoload
   - drush --yes pm-enable plug plug_example plug_test
+  - composer -d $(drush php-eval "drupal_realpath($(drush variable-get --exact composer_manager_file_dir))") update
 
   # start a web server on port 8080, run in the background; wait for initialization
   - drush runserver 127.0.0.1:8080 &
