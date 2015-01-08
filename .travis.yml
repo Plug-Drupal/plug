@@ -1,13 +1,13 @@
 language: php
 
 cache:
+  apt: true
   bundler: true
   directories:
     - $HOME/tmp/drush
     - $HOME/.bundle
     - $TRAVIS_BUILD_DIR/../drupal/sites/all/libraries/composer
     - $HOME/.composer/cache
-  apt: true
 
 php:
   - 5.4
