@@ -29,14 +29,15 @@ before_script:
   - ln -s $(readlink -e $(cd -)) plug/drupal/sites/all/modules/plug
   - cd plug/drupal
   - drush --yes dl composer_manager
+
   - drush --yes dl xautoload
   - drush --yes pm-enable plug plug_example plug_test
-  - uri=$(drush variable-get --exact --format=string composer_manager_file_dir)
-  - if [ "x$uri" = "x" ]; then uri="public://composer"; fi
-  - composer -d $(drush php-eval "drupal_realpath($uri)") update
+  # Download composer dependencies controlled by composer_manager.
+  - composer --working-dir="./sites/default/files/composer" update
 
   # start a web server on port 8080, run in the background; wait for initialization
   - drush runserver 127.0.0.1:8080 &
   - until netstat -an 2>/dev/null | grep '8080.*LISTEN'; do true; done
+  - echo $(which php)
 
 script: drush test-run Plug --uri=http://127.0.0.1:8080
