@@ -25,10 +25,10 @@ Beep-boop-clink-clank, this section is not done just yet. Check back soon!
 ## Installing
 This module relies on some parts of the Drupal 8 code. Those parts have been very well encapsulated and are highly reusable by any PHP project (including Drupal 7).
 
-This module relies on having this Drupal 8 code imported as a library using the composer manager module. To install the module just install it as usual and then run (in the path where composer_manager created your `composer.json`):
+This module relies on having this Drupal 8 code imported as a library using the composer manager module. To install the module just install it as usual and then run:
 
 ```
-php composer.phar update
+drush composer-manager update
 ```
 
 I can see how these will be exposed in the future as a composer package in [Packagist](https://packagist.org). It has not been done at the moment, so I created [a repo](https://github.com/mateu-aguilo-bosch/d7-plugins) with a copy of the Drupal 8 code as a temporary composer package.
