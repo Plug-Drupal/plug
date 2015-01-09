@@ -25,6 +25,7 @@ install:
   # Grab Drush
   - pear channel-discover pear.drush.org
   - pear install drush/drush-5.8.0
+  - phpenv rehash
   # Make sure we don't fail when checking out projects
   - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   # LAMP package installation (mysql is already started)
