@@ -71,6 +71,5 @@ script:
   - drush --yes dl composer_manager
   - drush --yes dl xautoload
   - drush --yes pm-enable plug plug_example plug_test
-  - drush composer update
   # Run the tests
   - drush test-run Plug --uri=http://localhost
