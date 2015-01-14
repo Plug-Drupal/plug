@@ -9,13 +9,7 @@
     }
   ],
   "minimum-stability": "dev",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/mateu-aguilo-bosch/d7-plugins.git"
-    }
-  ],
   "require": {
-    "drupal/d7-plugin": "master"
+    "drupal/d7-plugin": "0.0.*"
   }
 }
