@@ -33,3 +33,8 @@ drush composer-manager update
 ```
 
 I can see how these will be exposed in the future as a composer package in [Packagist](https://packagist.org). It has not been done at the moment, so I created [a repo](https://github.com/mateu-aguilo-bosch/d7-plugins) with a copy of the Drupal 8 code as a temporary composer package.
+
+## Implementations
+The following modules use the <strong>Plug</strong> module to declare their plugins. If you want your module to be in this list, [open an issue](https://github.com/mateu-aguilo-bosch/plug/issues/new).
+
+  - [Plug Field](https://github.com/plopesc/plug_field)
