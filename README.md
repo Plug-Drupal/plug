@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mateu-aguilo-bosch/plug.svg?branch=7.x-1.x)](https://travis-ci.org/mateu-aguilo-bosch/plug)
 # Plug
 Get the **plugin system** for Drupal 8 in your **Drupal 7 developments**.
 
