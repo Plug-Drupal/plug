@@ -49,7 +49,11 @@ before_script:
   # Install the site
   - drush -v site-install minimal --db-url=mysql://root:@localhost/drupal --yes
   - drush en --yes simpletest
+  # Set variable to 0 to avoid automatic composer build
   - drush vset composer_manager_autobuild_packages 0 -y
+  # Increase max_allowed_packet to avoid MySQL errors
+  - echo -e "[server]\nmax_allowed_packet=64M" | sudo tee -a /etc/mysql/conf.d/drupal.cnf
+  - sudo service mysql restart
   - phpenv rehash
 
 script:
