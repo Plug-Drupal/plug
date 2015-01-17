@@ -10,6 +10,6 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "drupal/d7-plugin": "0.0.*"
+    "drupal/d7-plugin": "~1.0"
   }
 }
