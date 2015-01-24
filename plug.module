@@ -15,19 +15,6 @@
  *   An adapter object that can register stuff into the class loader.
  */
 function plug_xautoload($adapter) {
-  // Register a namespace with PSR-4.
-  $adapter->addPsr4(
-  // The namespace.
-    'Drupal\Core\\',
-    // Path to the PSR-4 base directory.
-    'src/Core'
-  );
-}
-
-/**
- * Implements hook_boot().
- */
-function plug_boot() {
   if (!module_exists('composer_manager')) {
     return;
   }
@@ -41,4 +28,11 @@ function plug_boot() {
       watchdog_exception('composer_manager', $e);
     }
   }
+  // Register a namespace with PSR-4.
+  $adapter->addPsr4(
+  // The namespace.
+    'Drupal\Core\\',
+    // Path to the PSR-4 base directory.
+    'src/Core'
+  );
 }
