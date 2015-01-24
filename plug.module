@@ -23,3 +23,22 @@ function plug_xautoload($adapter) {
     'src/Core'
   );
 }
+
+/**
+ * Implements hook_boot().
+ */
+function plug_boot() {
+  if (!module_exists('composer_manager')) {
+    return;
+  }
+  // This allows us to load composer_manager's autoloader in time.
+  try {
+    // This helper function will see that it's only loaded once.
+    composer_manager_register_autoloader();
+  }
+  catch (\RuntimeException $e) {
+    if (!drupal_is_cli()) {
+      watchdog_exception('composer_manager', $e);
+    }
+  }
+}
