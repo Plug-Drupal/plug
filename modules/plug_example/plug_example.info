@@ -5,3 +5,4 @@ dependencies[] = plug
 
 ; Tests
 files[] = tests/PlugExampleBasicTest.test
+files[] = tests/PlugExampleUnitTest.test

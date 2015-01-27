@@ -15,7 +15,9 @@ class PlugExampleBasicTest extends DrupalWebTestCase {
   protected $namePlugins = array(
     // Check that John is not a company, modified in hook_name_plugin_alter().
     'My name is: John Doe',
+    'My name is: John Doe',
     'My name is: Mom',
+    'Company name: Acme Inc.',
     'Company name: Acme Inc.',
   );
 
