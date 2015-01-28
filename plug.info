@@ -2,6 +2,7 @@ name = Plug
 description = A port of the D8 plugin system.
 core = 7.x
 php = 5.4.2
+package = Plug
 dependencies[] = composer_manager
 dependencies[] = xautoload (>= 7.x-5.0)
 
