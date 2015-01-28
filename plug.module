@@ -36,3 +36,12 @@ function plug_xautoload($adapter) {
     'src/Core'
   );
 }
+
+/**
+ * Implements hook_system_theme_info().
+ *
+ * We only do this because that's the first hook to fire in update.php page.
+ */
+function plug_system_theme_info() {
+  xautoload()->phaseControl->enterMainPhase();
+}
