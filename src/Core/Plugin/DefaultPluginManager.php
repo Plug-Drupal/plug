@@ -105,7 +105,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    *   The created manager.
    */
   public static function get($bin = 'cache') {
-    $manager = &drupal_static('\\' . __NAMESPACE__ . '\\' . __CLASS__ . '::' . __METHOD__);
+    $manager = &drupal_static(get_called_class() . '::' . __METHOD__);
     if (!isset($manager)) {
       $manager = static::create($bin);
     }
