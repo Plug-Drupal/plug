@@ -49,17 +49,4 @@ class FruitPluginManager extends DefaultPluginManager {
     $this->setCacheBackend($cache_backend, 'fruit_plugins');
   }
 
-  /**
-   * FruitPluginManager factory method.
-   *
-   * @param string $bin
-   *   The cache bin for the plugin manager.
-   *
-   * @return FruitPluginManager
-   *   The created manager.
-   */
-  public static function create($bin = 'cache') {
-    return new static(Module::getNamespaces(), _cache_get_object($bin));
-  }
-
 }

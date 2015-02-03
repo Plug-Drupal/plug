@@ -30,17 +30,4 @@ class NamePluginManager extends DefaultPluginManager {
     $this->alterInfo('name_plugin');
   }
 
-  /**
-   * NamePluginManager factory method.
-   *
-   * @param string $bin
-   *   The cache bin for the plugin manager.
-   *
-   * @return NamePluginManager
-   *   The created manager.
-   */
-  public static function create($bin = 'cache') {
-    return new static(Module::getNamespaces(), _cache_get_object($bin));
-  }
-
 }
