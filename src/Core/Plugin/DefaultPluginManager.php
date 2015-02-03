@@ -13,6 +13,7 @@ use Drupal\Component\Plugin\PluginManagerBase;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
+use Drupal\plug\Util\Module;
 
 /**
  * Base class for plugin managers.
@@ -79,6 +80,36 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
     $this->subdir = $subdir;
     $this->discovery = new AnnotatedClassDiscovery($subdir, $namespaces, $plugin_definition_annotation_name);
     $this->factory = new ContainerFactory($this, $plugin_interface);
+  }
+
+  /**
+   * DefaultPluginManager factory method.
+   *
+   * @param string $bin
+   *   The cache bin for the plugin manager.
+   *
+   * @return DefaultPluginManager
+   *   The created manager.
+   */
+  public static function create($bin = 'cache') {
+    return new static(Module::getNamespaces(), _cache_get_object($bin));
+  }
+
+  /**
+   * DefaultPluginManager pseudo service.
+   *
+   * @param string $bin
+   *   The cache bin for the plugin manager.
+   *
+   * @return DefaultPluginManager
+   *   The created manager.
+   */
+  public static function get($bin = 'cache') {
+    $manager = &drupal_static(get_called_class() . '::' . __METHOD__);
+    if (!isset($manager)) {
+      $manager = static::create($bin);
+    }
+    return $manager;
   }
 
   /**
