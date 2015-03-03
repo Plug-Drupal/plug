@@ -1,4 +1,4 @@
-name = Plugs test
+name = Plug test
 description = A dummy module to test plug.
 core = 7.x
 package = Plug
