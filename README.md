@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mateu-aguilo-bosch/plug.svg?branch=7.x-1.x)](https://travis-ci.org/mateu-aguilo-bosch/plug) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/badges/quality-score.png?b=7.x-1.x)](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/?branch=7.x-1.x)
+[![Build Status](https://travis-ci.org/Plug-Drupal/plug.svg?branch=7.x-1.x)](https://travis-ci.org/Plug-Drupal/plug) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/badges/quality-score.png?b=7.x-1.x)](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/?branch=7.x-1.x)
 # Plug
 Get the **plugin system** for Drupal 8 in your **Drupal 7 developments**.
 
