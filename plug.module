@@ -10,11 +10,9 @@
  *
  * Register additional classes, namespaces, autoload patterns, that are not
  * already registered by default.
- *
- * @param \Drupal\xautoload\Adapter\LocalDirectoryAdapter $adapter
- *   An adapter object that can register stuff into the class loader.
  */
 function plug_xautoload($adapter) {
+  /** @var Drupal\xautoload\Adapter\ClassFinderAdapter $adapter */
   if (!module_exists('composer_manager')) {
     return;
   }
@@ -44,4 +42,20 @@ function plug_xautoload($adapter) {
  */
 function plug_system_theme_info() {
   xautoload()->phaseControl->enterMainPhase();
+}
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function plug_modules_enabled($modules) {
+  cache_clear_all('module_namespaces', 'cache');
+  cache_clear_all('module_directories', 'cache');
+}
+
+/**
+ * Implements hook_modules_disabled().
+ */
+function plug_modules_disabled($modules) {
+  cache_clear_all('module_namespaces', 'cache');
+  cache_clear_all('module_directories', 'cache');
 }
