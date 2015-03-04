@@ -12,20 +12,34 @@ class Module {
   /**
    * Generates the cached array of available namespaces for plugins.
    *
+   * @param bool $all
+   *   Include values for disabled modules.
+   *
    * @return \ArrayObject
    *   The generated array of namespaces.
    */
-  public static function getNamespaces() {
+  public static function getNamespaces($all = FALSE) {
+    if ($all) {
+      // Do not use caches or cache the results.
+      return new \ArrayObject(static::namespaces($all));
+    }
     return new \ArrayObject(static::memoize('namespaces'));
   }
 
   /**
    * Generates the cached array of enabled module directories.
    *
+   * @param bool $all
+   *   Include values for disabled modules.
+   *
    * @return array
    *   A list of module directories.
    */
-  public static function getDirectories() {
+  public static function getDirectories($all = FALSE) {
+    if ($all) {
+      // Do not use caches or cache the results.
+      return static::directories($all);
+    }
     return static::memoize('directories');
   }
 
@@ -55,12 +69,25 @@ class Module {
   /**
    * Gets all the module directories.
    *
+   * @param bool $all
+   *   Include values for disabled modules.
+   *
    * @return array
    *   A list of module directories.
    */
-  protected static function directories() {
+  protected static function directories($all = FALSE) {
     $directories = array();
-    foreach (module_list() as $module) {
+    if ($all) {
+      // We cannot use module_list to get the disabled modules. Query the system
+      // table instead.
+      $sql = "SELECT name FROM {system} WHERE type = :type";
+      $modules = db_query($sql, array(':type' => 'module'))->fetchCol();
+      $modules = drupal_map_assoc($modules);
+    }
+    else {
+      $modules = module_list();
+    }
+    foreach ($modules as $module) {
       $directories[$module] = drupal_get_path('module', $module);
     }
     return $directories;
@@ -69,12 +96,15 @@ class Module {
   /**
    * Gets the array of available namespaces for plugins.
    *
+   * @param bool $all
+   *   Include values for disabled modules.
+   *
    * @return array
    *   The generated array of namespaces.
    */
-  protected static function namespaces() {
+  protected static function namespaces($all = FALSE) {
     $namespaces = array();
-    foreach (static::getDirectories() as $module => $path) {
+    foreach (static::getDirectories($all) as $module => $path) {
       $namespaces['Drupal\\' . $module] = $path . '/src';
     }
     return $namespaces;
