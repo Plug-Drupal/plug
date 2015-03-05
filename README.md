@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/Plug-Drupal/plug.svg?branch=7.x-1.x)](https://travis-ci.org/Plug-Drupal/plug) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/badges/quality-score.png?b=7.x-1.x)](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/?branch=7.x-1.x)
 # Plug
+
+[![Join the chat at https://gitter.im/Plug-Drupal/plug](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Plug-Drupal/plug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Get the **plugin system** for Drupal 8 in your **Drupal 7 developments**.
 
 The Plug module is a module for developers that can't wait until Drupal 8 comes out to use the plugin system that will ship with it. You can use this as an alternative to your custom CTools plugins.
