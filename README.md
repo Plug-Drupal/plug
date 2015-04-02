@@ -38,4 +38,5 @@ I can see how these will be exposed in the future as a composer package in [Pack
 ## Implementations
 The following modules use the <strong>Plug</strong> module to declare their plugins. If you want your module to be in this list, [open an issue](https://github.com/mateu-aguilo-bosch/plug/issues/new).
 
-  - [Plug Field](https://github.com/plopesc/plug_field)
+  - [Plug Field](https://github.com/Plug-Drupal/plug_field)
+  - [Plug Config](https://github.com/Plug-Drupal/plug_config)
