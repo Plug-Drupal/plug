@@ -11,6 +11,7 @@ use Drupal\Component\Plugin\Discovery\CachedDiscoveryInterface;
 use Drupal\Component\Plugin\Discovery\DiscoveryCachedTrait;
 use Drupal\Component\Plugin\PluginManagerBase;
 use Drupal\Component\Plugin\PluginManagerInterface;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 
@@ -207,7 +208,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    */
   public function processDefinition(&$definition, $plugin_id) {
     if (!empty($this->defaults) && is_array($this->defaults)) {
-      $definition = drupal_array_merge_deep($this->defaults, $definition);
+      $definition = NestedArray::mergeDeep($this->defaults, $definition);
     }
   }
 
