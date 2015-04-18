@@ -62,6 +62,13 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
   protected $defaults = array();
 
   /**
+   * Flag whether persistent caches should be used.
+   *
+   * @var bool
+   */
+  protected $useCaches = TRUE;
+
+  /**
    * Creates the discovery object.
    *
    * @param string|bool $subdir
@@ -141,7 +148,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    *   and would actually be returned by the getDefinitions() method.
    */
   protected function getCachedDefinitions() {
-    if (!isset($this->definitions) && $this->cacheBackend && $cache = $this->cacheBackend->get($this->cacheKey)) {
+    if (!isset($this->definitions) && $cache = $this->cacheGet($this->cacheKey)) {
       $this->definitions = $cache->data;
     }
     return $this->definitions;
@@ -154,12 +161,42 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    *   List of definitions to store in cache.
    */
   protected function setCachedDefinitions($definitions) {
-    if ($this->cacheBackend) {
-      $this->cacheBackend->set($this->cacheKey, $definitions, CACHE_PERMANENT);
-    }
+    $this->cacheSet($this->cacheKey, $definitions, CACHE_PERMANENT);
     $this->definitions = $definitions;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function useCaches($use_caches = FALSE) {
+    $this->useCaches = $use_caches;
+    if (!$use_caches) {
+      $this->definitions = NULL;
+    }
+  }
+
+  /**
+   * Fetches from the cache backend, respecting the use caches flag.
+   *
+   * @see \DrupalCacheInterface::get()
+   */
+  protected function cacheGet($cid) {
+    if ($this->useCaches && $this->cacheBackend) {
+      return $this->cacheBackend->get($cid);
+    }
+    return FALSE;
+  }
+
+  /**
+   * Stores data in the persistent cache, respecting the use caches flag.
+   *
+   * @see \DrupalCacheInterface::set()
+   */
+  protected function cacheSet($cid, $data, $expire = CACHE_PERMANENT, array $tags = array()) {
+    if ($this->cacheBackend && $this->useCaches) {
+      $this->cacheBackend->set($cid, $data, $expire, $tags);
+    }
+  }
 
   /**
    * Performs extra processing on plugin definitions.
@@ -168,7 +205,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    * additional processing logic they can do that by replacing or extending the
    * method.
    */
-  public function processDefinition(&$definition) {
+  public function processDefinition(&$definition, $plugin_id) {
     if (!empty($this->defaults) && is_array($this->defaults)) {
       $definition = drupal_array_merge_deep($this->defaults, $definition);
     }
@@ -185,9 +222,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
     foreach ($definitions as $plugin_id => &$definition) {
       $this->processDefinition($definition, $plugin_id);
     }
-    if ($this->alterHook) {
-      drupal_alter($this->alterHook, $definitions);
-    }
+    $this->alterDefinitions($definitions);
     // If this plugin was provided by a module that does not exist, remove the
     // plugin definition.
     foreach ($definitions as $plugin_id => $plugin_definition) {
@@ -196,12 +231,23 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
       if (is_object($plugin_definition) && !($plugin_definition = (array) $plugin_definition)) {
         continue;
       }
-      // TODO: Check if !in_array($plugin_definition['provider'], array('core', 'component')) is doing anything.
       if (isset($plugin_definition['provider']) && !in_array($plugin_definition['provider'], array('core', 'component')) && !module_exists($plugin_definition['provider'])) {
         unset($definitions[$plugin_id]);
       }
     }
     return $definitions;
+  }
+
+  /**
+   * Invokes the hook to alter the definitions if the alter hook is set.
+   *
+   * @param $definitions
+   *   The discovered plugin defintions.
+   */
+  protected function alterDefinitions(&$definitions) {
+    if ($this->alterHook) {
+      drupal_alter($this->alterHook, $definitions);
+    }
   }
 
 }
