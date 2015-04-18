@@ -11,6 +11,7 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Component\Plugin\LazyPluginCollection;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
+use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 
 /**
  * Provides a default plugin collection for a plugin type.
@@ -21,6 +22,7 @@ use Drupal\Component\Plugin\ConfigurablePluginInterface;
  * self::$pluginKey.
  */
 class DefaultLazyPluginCollection extends LazyPluginCollection {
+  use DependencySerializationTrait;
 
   /**
    * The manager used to instantiate the plugins.
@@ -51,13 +53,6 @@ class DefaultLazyPluginCollection extends LazyPluginCollection {
    * @var array
    */
   protected $originalOrder = array();
-
-  /**
-   * An array of service IDs keyed by property name used for serialization.
-   *
-   * @var array
-   */
-  protected $_serviceIds = array();
 
   /**
    * Constructs a new DefaultLazyPluginCollection object.
@@ -115,7 +110,6 @@ class DefaultLazyPluginCollection extends LazyPluginCollection {
    */
   public function getConfiguration() {
     $instances = array();
-    $this->rewind();
     // Store the current order of the instances.
     $current_order = $this->instanceIDs;
     // Reorder the instances to match the original order, adding new instances
@@ -184,25 +178,6 @@ class DefaultLazyPluginCollection extends LazyPluginCollection {
     parent::removeInstanceId($instance_id);
     unset($this->originalOrder[$instance_id]);
     unset($this->configurations[$instance_id]);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function __sleep() {
-    $this->_serviceIds = array();
-    $vars = get_object_vars($this);
-    foreach ($vars as $key => $value) {
-      if (is_object($value) && isset($value->_serviceId)) {
-        // If a class member was instantiated by the dependency injection
-        // container, only store its ID so it can be used to get a fresh object
-        // on unserialization.
-        $this->_serviceIds[$key] = $value->_serviceId;
-        unset($vars[$key]);
-      }
-    }
-
-    return array_keys($vars);
   }
 
 }
