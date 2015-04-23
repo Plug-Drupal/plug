@@ -206,7 +206,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    * additional processing logic they can do that by replacing or extending the
    * method.
    */
-  public function processDefinition(&$definition, $plugin_id) {
+  public function processDefinition(&$definition, $plugin_id = NULL) {
     if (!empty($this->defaults) && is_array($this->defaults)) {
       $definition = NestedArray::mergeDeep($this->defaults, $definition);
     }
