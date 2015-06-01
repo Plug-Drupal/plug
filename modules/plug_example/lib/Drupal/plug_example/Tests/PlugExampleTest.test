@@ -5,10 +5,11 @@
  * Basic tests cases for plug_example module.
  */
 
-use Drupal\plug_example\NamePluginManager;
-use Drupal\xautoload\ClassLoader\ClassLoaderInterface;
+namespace Drupal\plug_example\Tests;
 
-class PlugExampleUnitTest extends \DrupalUnitTestCase {
+use Drupal\plug_example\NamePluginManager;
+
+class PlugExampleTest extends \DrupalWebTestCase {
 
   /**
    * The plugin manager.

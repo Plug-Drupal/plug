@@ -5,7 +5,9 @@
  * Basic tests cases for plug_example module.
  */
 
-class PlugExampleBasicTest extends DrupalWebTestCase {
+namespace Drupal\plug_example\Tests;
+
+class PlugExampleBasicTest extends \DrupalWebTestCase {
 
   /**
    * Expected output for default name plugins.

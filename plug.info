@@ -7,6 +7,3 @@ dependencies[] = registry_autoload
 dependencies[] = composer_manager
 
 registry_autoload[] = PSR-4
-
-; Tests
-files[] = tests/PlugBasicTest.test

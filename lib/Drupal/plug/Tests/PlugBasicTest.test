@@ -4,7 +4,10 @@
  * @file
  * Basic tests cases for plug module.
  */
-use \Drupal\plug\Util\Module;
+
+namespace Drupal\plug\Tests;
+
+use Drupal\plug\Util\Module;
 
 class PlugBasicTest extends \DrupalWebTestCase {
 
