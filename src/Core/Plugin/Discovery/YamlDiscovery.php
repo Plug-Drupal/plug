@@ -49,9 +49,9 @@ class YamlDiscovery implements DiscoveryInterface {
     foreach ($plugins as $provider => $list) {
       foreach ($list as $id => $definition) {
         $definitions[$id] = $definition + array(
-            'provider' => $provider,
-            'id' => $id,
-          );
+          'provider' => $provider,
+          'id' => $id,
+        );
       }
     }
 

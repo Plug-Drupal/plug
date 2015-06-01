@@ -4,3 +4,19 @@
  * @file
  * Module implementation file.
  */
+
+/**
+ * Implements hook_modules_enabled().
+ */
+function plug_modules_enabled($modules) {
+  cache_clear_all('module_namespaces', 'cache');
+  cache_clear_all('module_directories', 'cache');
+}
+
+/**
+ * Implements hook_modules_disabled().
+ */
+function plug_modules_disabled($modules) {
+  cache_clear_all('module_namespaces', 'cache');
+  cache_clear_all('module_directories', 'cache');
+}

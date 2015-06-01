@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/mateu-aguilo-bosch/plug.svg?branch=7.x-1.x)](https://travis-ci.org/mateu-aguilo-bosch/plug) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/badges/quality-score.png?b=7.x-1.x)](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/?branch=7.x-1.x)
+[![Build Status](https://travis-ci.org/Plug-Drupal/plug.svg?branch=7.x-1.x)](https://travis-ci.org/Plug-Drupal/plug) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/badges/quality-score.png?b=7.x-1.x)](https://scrutinizer-ci.com/g/mateu-aguilo-bosch/plug/?branch=7.x-1.x) [![Join the chat at https://gitter.im/Plug-Drupal/plug](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Plug-Drupal/plug?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # Plug
+
 Get the **plugin system** for Drupal 8 in your **Drupal 7 developments**.
 
 The Plug module is a module for developers that can't wait until Drupal 8 comes out to use the plugin system that will ship with it. You can use this as an alternative to your custom CTools plugins.
@@ -37,4 +38,5 @@ I can see how these will be exposed in the future as a composer package in [Pack
 ## Implementations
 The following modules use the <strong>Plug</strong> module to declare their plugins. If you want your module to be in this list, [open an issue](https://github.com/mateu-aguilo-bosch/plug/issues/new).
 
-  - [Plug Field](https://github.com/plopesc/plug_field)
+  - [Plug Field](https://github.com/Plug-Drupal/plug_field)
+  - [Plug Config](https://github.com/Plug-Drupal/plug_config)
