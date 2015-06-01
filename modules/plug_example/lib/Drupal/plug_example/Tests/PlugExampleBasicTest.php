@@ -7,6 +7,8 @@
 
 namespace Drupal\plug_example\Tests;
 
+use Drupal\plug_example\NamePluginManager;
+
 class PlugExampleBasicTest extends \DrupalWebTestCase {
 
   /**
@@ -80,6 +82,13 @@ class PlugExampleBasicTest extends \DrupalWebTestCase {
   protected $yamlTestPath = 'plug/test/yaml';
 
   /**
+   * The plugin manager.
+   *
+   * @var NamePluginManager
+   */
+  protected $manager;
+
+  /**
    * {@inheritdoc}
    */
   public static function getInfo() {
@@ -95,6 +104,8 @@ class PlugExampleBasicTest extends \DrupalWebTestCase {
    */
   public function setUp() {
     parent::setUp('plug_example');
+    // Get a new Name plugin manager to instantiate the test plugins.
+    $this->manager = NamePluginManager::create();
   }
 
   /**
@@ -182,6 +193,39 @@ class PlugExampleBasicTest extends \DrupalWebTestCase {
     cache_clear_all($cid, 'cache');
 
     $this->assertExamplePageResults($results, $path);
+  }
+
+  /**
+   * Test if displayName() handles the names right.
+   */
+  function testDisplayName() {
+    /** @var \Drupal\plug_example\Plugin\name\JohnTest $plugin */
+    $plugin = $this->manager->createInstance('john_test', array('em' => TRUE));
+    $this->assertEqual($plugin->displayName(), 'My name is: %name');
+    $plugin = $this->manager->createInstance('john_test', array('em' => FALSE));
+    $this->assertEqual($plugin->displayName(), 'My name is: @name');
+
+    /** @var \Drupal\plug_example\Plugin\name\AcmeTest $plugin */
+    $plugin = $this->manager->createInstance('acme_test', array('em' => TRUE));
+    $this->assertEqual($plugin->displayName(), 'Company name: %name Inc.');
+    $plugin = $this->manager->createInstance('acme_test', array('em' => FALSE));
+    $this->assertEqual($plugin->displayName(), 'Company name: @name Inc.');
+  }
+
+  /**
+   * Test plugin internals.
+   */
+  function testPluginInternals() {
+    /** @var \Drupal\plug_example\Plugin\name\JohnTest $plugin */
+    $plugin = $this->manager->createInstance('john_test', array('em' => TRUE));
+    $definition = $plugin->getPluginDefinition();
+    $expected = array(
+      'class' => 'Drupal\plug_example\Plugin\name\JohnTest',
+      'company' => FALSE,
+      'id' => 'john_test',
+      'provider' => 'plug_example',
+    );
+    $this->assertEqual($expected, $definition);
   }
 
 }
