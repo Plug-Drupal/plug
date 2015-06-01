@@ -4,6 +4,7 @@ core = 7.x
 php = 5.4.2
 package = Plug
 dependencies[] = registry_autoload
+dependencies[] = composer_manager
 
 registry_autoload[] = PSR-4
 

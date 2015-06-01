@@ -4,6 +4,8 @@ core = 7.x
 package = Plug
 dependencies[] = plug
 
+registry_autoload[] = PSR-4
+
 ; Tests
 files[] = tests/PlugExampleBasicTest.test
 files[] = tests/PlugExampleUnitTest.test
