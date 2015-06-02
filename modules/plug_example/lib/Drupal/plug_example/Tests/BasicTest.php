@@ -5,10 +5,67 @@
  * Basic tests cases for plug_example module.
  */
 
-use Drupal\plug_example\NamePluginManager;
-use Drupal\xautoload\ClassLoader\ClassLoaderInterface;
+namespace Drupal\plug_example\Tests;
 
-class PlugExampleUnitTest extends \DrupalUnitTestCase {
+use Drupal\plug_example\NamePluginManager;
+
+class BasicTest extends BaseTest {
+
+  /**
+   * Expected output for default name plugins.
+   *
+   * @var array
+   */
+  protected $namePlugins = array(
+    // Check that John is not a company, modified in hook_name_plugin_alter().
+    'My name is: John Doe',
+    'My name is: John Doe',
+    'My name is: Mom',
+    'Company name: Acme Inc.',
+    'Company name: Acme Inc.',
+  );
+
+  /**
+   * Cache id defined for name plugins.
+   *
+   * @var string
+   */
+  protected $nameCache = 'name_plugins';
+
+  /**
+   * Expected output for default fruit plugins.
+   *
+   * @var array
+   */
+  protected $fruitPlugins = array(
+    // Check that Banana is in, added in hook_fruit_plugin_alter().
+    'Fruit name: Banana',
+    'Fruit name: Apple',
+    'Fruit name: Orange',
+    'Fruit name: Melon',
+    'Yikes, Mamoncillo!',
+  );
+
+  /**
+   * Cache id defined for name plugins.
+   *
+   * @var string
+   */
+  protected $fruitCache = 'fruit_plugins';
+
+  /**
+   * Annotated plugins test page path.
+   *
+   * @var string
+   */
+  protected $annotatedTestPath = 'plug/test/annotated';
+
+  /**
+   * YAML plugins test page path.
+   *
+   * @var string
+   */
+  protected $yamlTestPath = 'plug/test/yaml';
 
   /**
    * The plugin manager.
@@ -18,32 +75,37 @@ class PlugExampleUnitTest extends \DrupalUnitTestCase {
   protected $manager;
 
   /**
-   * Declare test information.
-   *
-   * @return array
-   *   The information array.
+   * {@inheritdoc}
    */
   public static function getInfo() {
     return array(
-      'name' => 'Plug display name',
-      'description' => 'Test the display name method functionality.',
+      'name' => 'Plug Example tests',
+      'description' => 'Plug example basic tests',
       'group' => 'Plug',
     );
   }
 
   /**
-   * Set up.
+   * {@inheritdoc}
    */
   public function setUp() {
-    // Let xautoload to discover where classes live. We cannot rely on Drupal's
-    // autoloader since the database will not be ready at this point for unit
-    // tests.
-    spl_autoload_unregister('drupal_autoload_class');
-    spl_autoload_unregister('drupal_autoload_interface');
-
-    parent::setUp();
+    parent::setUp('plug_example');
     // Get a new Name plugin manager to instantiate the test plugins.
     $this->manager = NamePluginManager::create();
+  }
+
+  /**
+   * Tests annotated plugins example page output.
+   */
+  public function testBasicAnnotationExamplePage() {
+    $this->assertExamplePageResults($this->namePlugins, $this->annotatedTestPath);
+  }
+
+  /**
+   * Tests YAML plugins example page output.
+   */
+  public function testBasicYamlExamplePage() {
+    $this->assertExamplePageResults($this->fruitPlugins, $this->yamlTestPath);
   }
 
   /**

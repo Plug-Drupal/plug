@@ -4,7 +4,10 @@
  * @file
  * Basic tests cases for plug module.
  */
-use \Drupal\plug\Util\Module;
+
+namespace Drupal\plug\Tests;
+
+use Drupal\plug\Util\Module;
 
 class PlugBasicTest extends \DrupalWebTestCase {
 
@@ -31,8 +34,6 @@ class PlugBasicTest extends \DrupalWebTestCase {
    */
   public function testModuleDirectories() {
     $expected_values = array (
-      'xautoload' => drupal_get_path('module', 'xautoload'),
-      'composer_manager' => drupal_get_path('module', 'composer_manager'),
       'plug' => drupal_get_path('module', 'plug'),
       'field' => 'modules/field',
       'field_sql_storage' => 'modules/field/modules/field_sql_storage',
@@ -55,8 +56,6 @@ class PlugBasicTest extends \DrupalWebTestCase {
    */
   public function testModuleNamespaces() {
     $expected_values = array(
-      'Drupal\\xautoload' => drupal_get_path('module', 'xautoload') . '/src',
-      'Drupal\\composer_manager' => drupal_get_path('module', 'composer_manager') . '/src',
       'Drupal\\plug' => drupal_get_path('module', 'plug') . '/src',
       'Drupal\\field' => 'modules/field/src',
       'Drupal\\field_sql_storage' => 'modules/field/modules/field_sql_storage/src',

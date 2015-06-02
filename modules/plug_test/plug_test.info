@@ -3,3 +3,5 @@ description = A dummy module to test plug.
 core = 7.x
 package = Plug
 dependencies[] = plug_example
+
+registry_autoload[] = PSR-4

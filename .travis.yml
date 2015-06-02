@@ -47,8 +47,6 @@ install:
   # Restart apache and test it
   - sudo service apache2 restart
   - curl -v "http://localhost"
-  # Re-enable when trying to get CodeSniffer doesn't return a 403 anymore.
-  #- composer global require drupal/coder:\>7
 
 before_script:
   - cd $TRAVIS_BUILD_DIR/../drupal
@@ -73,7 +71,6 @@ script:
   # Download and enable module and its dependencies
   - drush --yes dl composer-8.x-1.x
   - drush --yes dl composer_manager
-  - drush --yes dl xautoload
   - drush --yes pm-enable plug plug_example plug_test
   - drush --yes composer-manager update --no-interaction --prefer-source
   # Run the tests

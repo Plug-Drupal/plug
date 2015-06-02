@@ -2,10 +2,12 @@
 
 /**
  * @file
- * Basic tests cases for plug_example module.
+ * Contains Drupal\plug_example\Tests\BaseTest.
  */
 
-class PlugExampleBasicTest extends DrupalWebTestCase {
+namespace Drupal\plug_example\Tests;
+
+class BaseTest extends \DrupalWebTestCase {
 
   /**
    * Expected output for default name plugins.
@@ -20,13 +22,6 @@ class PlugExampleBasicTest extends DrupalWebTestCase {
     'Company name: Acme Inc.',
     'Company name: Acme Inc.',
   );
-
-  /**
-   * Expected output for extra name plugins.
-   *
-   * @var array
-   */
-  protected $extraNamePlugins = array('Company name: New Acme Inc.');
 
   /**
    * Cache id defined for name plugins.
@@ -50,13 +45,6 @@ class PlugExampleBasicTest extends DrupalWebTestCase {
   );
 
   /**
-   * Expected output for extra fruit plugins.
-   *
-   * @var array
-   */
-  protected $extraFruitPlugins = array('Fruit name: Pear');
-
-  /**
    * Cache id defined for name plugins.
    *
    * @var string
@@ -78,50 +66,11 @@ class PlugExampleBasicTest extends DrupalWebTestCase {
   protected $yamlTestPath = 'plug/test/yaml';
 
   /**
-   * {@inheritdoc}
+   * The plugin manager.
+   *
+   * @var \Drupal\plug_example\NamePluginManager
    */
-  public static function getInfo() {
-    return array(
-      'name' => 'Plug Example tests',
-      'description' => 'Plug example basic tests',
-      'group' => 'Plug',
-    );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp() {
-    parent::setUp('plug_example');
-  }
-
-  /**
-   * Tests annotated plugins example page output.
-   */
-  public function testBasicAnnotationExamplePage() {
-    $this->assertExamplePageResults($this->namePlugins, $this->annotatedTestPath);
-  }
-
-  /**
-   * Tests YAML plugins example page output.
-   */
-  public function testBasicYamlExamplePage() {
-    $this->assertExamplePageResults($this->fruitPlugins, $this->yamlTestPath);
-  }
-
-  /**
-   * Tests the annotated plugin discovery in multiple modules.
-   */
-  public function testAnnotatedDiscovery() {
-    $this->assertTestModulePlugins($this->namePlugins, $this->extraNamePlugins, $this->annotatedTestPath, $this->nameCache);
-  }
-
-  /**
-   * Tests the YAML plugin discovery in multiple modules.
-   */
-  public function testYamlDiscovery() {
-    $this->assertTestModulePlugins($this->fruitPlugins, $this->extraFruitPlugins, $this->yamlTestPath, $this->fruitCache);
-  }
+  protected $manager;
 
   /**
    * Asserts the number of items in a XPath selector.
@@ -171,12 +120,14 @@ class PlugExampleBasicTest extends DrupalWebTestCase {
    *   Cache id related to the plugin type
    */
   protected function assertTestModulePlugins(array $results, array $extra, $path, $cid) {
-    module_enable(array('plug_test'));
+    $modules = array('plug_test');
+    module_enable($modules);
     cache_clear_all($cid, 'cache');
 
     $this->assertExamplePageResults(array_merge($results, $extra), $path);
 
-    module_disable(array('plug_test'));
+    module_disable($modules);
+    drupal_uninstall_modules($modules);
     cache_clear_all($cid, 'cache');
 
     $this->assertExamplePageResults($results, $path);
