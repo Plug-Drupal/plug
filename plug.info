@@ -7,3 +7,4 @@ dependencies[] = registry_autoload
 dependencies[] = composer_manager
 
 registry_autoload[] = PSR-4
+registry_autoload[] = PSR-0
