@@ -81,7 +81,7 @@ class BasicTest extends BaseTest {
     return array(
       'name' => 'Plug Example tests',
       'description' => 'Plug example basic tests',
-      'group' => 'Plug',
+      'group' => 'plug',
     );
   }
 

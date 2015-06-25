@@ -66,6 +66,7 @@ install:
 
 before_script:
   - drupal-ti before_script
+  - drush en -y plug_example
 
 script:
   - drupal-ti script
