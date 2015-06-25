@@ -67,7 +67,7 @@ install:
 
 before_script:
   - drupal-ti before_script
-  - drush en -y plug_example
+  - drush pm-enable --yes --root=/home/travis/build/Plug-Drupal/drupal-7/drupal plug_example
 
 script:
   - drupal-ti script
