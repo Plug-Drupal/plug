@@ -27,6 +27,7 @@ env:
 
     # Drupal specific vars.
     - DRUPAL_TI_MODULE_NAME="plug"
+    - DRUPAL_TI_SIMPLETEST_GROUP="plug"
     - DRUPAL_TI_DB="drupal_travis_db"
     - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
     # Note: Do not add a trailing slash here.
@@ -34,15 +35,15 @@ env:
     - DRUPAL_TI_WEBSERVER_PORT="8080"
 
     # Simpletest specific commandline arguments.
-    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT $DRUPAL_TI_MODULE_NAME"
+    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT $DRUPAL_TI_SIMPLETEST_GROUP"
 
     # PHPUnit specific commandline arguments.
     - DRUPAL_TI_PHPUNIT_ARGS=""
 
     # Code coverage via coveralls.io
-    - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
+    # - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
     # This needs to match your .coveralls.yml file.
-    - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
+    # - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
 
     # Debug options
     #- DRUPAL_TI_DEBUG="-x -v"
