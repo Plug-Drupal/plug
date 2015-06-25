@@ -23,7 +23,7 @@ class JohnTest extends John {
    *
    * Overrides the translation method to avoid bootstrap.
    */
-  protected function t($string, array $args = array(), array $options = array()) {
+  protected static function t($string, array $args = array(), array $options = array()) {
     return $string;
   }
 

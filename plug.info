@@ -3,8 +3,8 @@ description = A port of the D8 plugin system.
 core = 7.x
 php = 5.4.2
 package = Plug
+dependencies[] = registry_autoload
 dependencies[] = composer_manager
-dependencies[] = xautoload (>= 7.x-5.0)
 
-; Tests
-files[] = tests/PlugBasicTest.test
+registry_autoload[] = PSR-4
+registry_autoload[] = PSR-0

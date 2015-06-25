@@ -23,14 +23,13 @@ abstract class NameBase extends PluginBase implements NameInterface {
    */
   public function displayName() {
     $definition = $this->getPluginDefinition();
-    $replacement = $this->configuration['em'] ? '%name' : '@name';
+    $replacement = empty($this->configuration['em']) ? '@name' : '%name';
     if ($definition['company']) {
-
-      return $this->t('Company name: ' . $replacement . ' Inc.', array(
+      return $this::t('Company name: ' . $replacement . ' Inc.', array(
         $replacement => $this->name,
       ));
     }
-    return $this->t('My name is: ' . $replacement, array(
+    return $this::t('My name is: ' . $replacement, array(
       $replacement => $this->name,
     ));
   }
@@ -54,7 +53,7 @@ abstract class NameBase extends PluginBase implements NameInterface {
    *
    * @see t().
    */
-  protected function t($string, array $args = array(), array $options = array()) {
+  protected static function t($string, array $args = array(), array $options = array()) {
     return t($string,$args, $options);
   }
 

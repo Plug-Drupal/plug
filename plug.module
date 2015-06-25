@@ -6,45 +6,6 @@
  */
 
 /**
- * Implements hook_xautoload().
- *
- * Register additional classes, namespaces, autoload patterns, that are not
- * already registered by default.
- */
-function plug_xautoload($adapter) {
-  /** @var Drupal\xautoload\Adapter\ClassFinderAdapter $adapter */
-  if (!module_exists('composer_manager')) {
-    return;
-  }
-  // This allows us to load composer_manager's autoloader in time.
-  try {
-    // This helper function will see that it's only loaded once.
-    composer_manager_register_autoloader();
-  }
-  catch (\RuntimeException $e) {
-    if (!drupal_is_cli()) {
-      watchdog_exception('composer_manager', $e);
-    }
-  }
-  // Register a namespace with PSR-4.
-  $adapter->addPsr4(
-  // The namespace.
-    'Drupal\Core\\',
-    // Path to the PSR-4 base directory.
-    'src/Core'
-  );
-}
-
-/**
- * Implements hook_system_theme_info().
- *
- * We only do this because that's the first hook to fire in update.php page.
- */
-function plug_system_theme_info() {
-  xautoload()->phaseControl->enterMainPhase();
-}
-
-/**
  * Implements hook_modules_enabled().
  */
 function plug_modules_enabled($modules) {
