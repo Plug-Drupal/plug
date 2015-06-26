@@ -4,5 +4,4 @@ core = 7.x
 package = Plug
 dependencies[] = plug
 
-registry_autoload[] = PSR-0
 registry_autoload[] = PSR-4
