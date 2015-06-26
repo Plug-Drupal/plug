@@ -67,6 +67,7 @@ install:
 
 before_script:
   - drupal-ti before_script
+  - drush cc all --root=/home/travis/build/Plug-Drupal/drupal-7/drupal
 
 script:
   - drupal-ti script
