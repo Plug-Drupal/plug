@@ -5,5 +5,5 @@ php = 5.4.2
 package = Plug
 dependencies[] = registry_autoload
 
-registry_autoload[] = PSR-4
 registry_autoload[] = PSR-0
+registry_autoload[] = PSR-4
