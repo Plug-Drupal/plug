@@ -31,7 +31,7 @@ class ExtraTest extends BaseTest {
     return array(
       'name' => 'Plug Example extra tests',
       'description' => 'Plug example extra tests',
-      'group' => 'plug',
+      'group' => 'Plug',
     );
   }
 

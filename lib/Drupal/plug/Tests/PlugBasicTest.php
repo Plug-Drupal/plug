@@ -18,7 +18,7 @@ class PlugBasicTest extends \DrupalWebTestCase {
     return array(
       'name' => 'Plug tests',
       'description' => 'Plug basic tests',
-      'group' => 'plug',
+      'group' => 'Plug',
     );
   }
 

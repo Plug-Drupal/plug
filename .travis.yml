@@ -27,7 +27,7 @@ env:
 
     # Drupal specific vars.
     - DRUPAL_TI_MODULE_NAME="plug"
-    - DRUPAL_TI_SIMPLETEST_GROUP="plug"
+    - DRUPAL_TI_SIMPLETEST_GROUP="Plug"
     - DRUPAL_TI_DB="drupal_travis_db"
     - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
     # Note: Do not add a trailing slash here.
@@ -50,7 +50,7 @@ env:
 
   matrix:
     # - DRUPAL_TI_RUNNERS="phpunit"
-    - DRUPAL_TI_RUNNERS="phpunit simpletest"
+    - DRUPAL_TI_RUNNERS="simpletest"
 
 mysql:
   database: drupal_travis_db
