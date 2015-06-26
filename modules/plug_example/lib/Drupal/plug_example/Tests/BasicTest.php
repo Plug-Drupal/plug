@@ -89,7 +89,7 @@ class BasicTest extends BaseTest {
    * {@inheritdoc}
    */
   public function setUp() {
-    parent::setUp('plug', 'plug_example');
+    parent::setUp('plug_example');
     // Get a new Name plugin manager to instantiate the test plugins.
     $this->manager = NamePluginManager::create();
   }
