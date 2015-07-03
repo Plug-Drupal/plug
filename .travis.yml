@@ -26,7 +26,7 @@ env:
     - PATH="$PATH:$HOME/.composer/vendor/bin"
 
     # Drupal specific vars.
-    - DRUPAL_TI_MODULE_NAME="plug,plug_example"
+    - DRUPAL_TI_MODULE_NAME="plug_example"
     - DRUPAL_TI_SIMPLETEST_GROUP="Plug"
     - DRUPAL_TI_DB="drupal_travis_db"
     - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
