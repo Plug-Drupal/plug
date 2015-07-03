@@ -50,7 +50,7 @@ env:
 
   matrix:
     # - DRUPAL_TI_RUNNERS="phpunit"
-    - DRUPAL_TI_RUNNERS="phpunit simpletest"
+    - DRUPAL_TI_RUNNERS="simpletest"
 
 mysql:
   database: drupal_travis_db
