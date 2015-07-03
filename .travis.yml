@@ -56,7 +56,12 @@ script:
   - cd $TRAVIS_BUILD_DIR/../drupal
 
   # Download and enable module and its dependencies
+  - drush --yes dl registry_rebuild
   - drush --yes dl registry_autoload
+  - drush cc drush
+  - drush rr
+  - drush sqlq "SELECT * FROM {registry}\G"
+  - drush sqlq "SELECT * FROM {registry_file}\G"
 
   # Enable the Plug modules
   - drush en --yes simpletest
