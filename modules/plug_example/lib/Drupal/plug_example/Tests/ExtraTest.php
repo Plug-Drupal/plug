@@ -39,7 +39,7 @@ class ExtraTest extends BaseTest {
    * {@inheritdoc}
    */
   public function setUp() {
-    parent::setUp('plug_example', 'plug_test');
+    parent::setUp('registry_autoload', 'plug_example', 'plug_test');
   }
 
   /**
