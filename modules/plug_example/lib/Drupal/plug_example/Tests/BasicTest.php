@@ -94,6 +94,8 @@ class BasicTest extends BaseTest {
     $this->manager = NamePluginManager::create();
     print_r(db_query("SELECT * FROM {registry}")->fetchAllAssoc('name'));
     print_r(db_query("SELECT filename FROM {registry_file}")->fetchCol());
+    var_dump(interface_exists('Doctrine\Common\Reflection\ClassFinderInterface'));
+    var_dump(class_exists('Doctrine\Common\Reflection\ClassFinderInterface'));
   }
 
   /**
