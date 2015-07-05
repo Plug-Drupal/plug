@@ -92,8 +92,8 @@ class BasicTest extends BaseTest {
     parent::setUp('registry_autoload', 'plug_example');
     // Get a new Name plugin manager to instantiate the test plugins.
     $this->manager = NamePluginManager::create();
-    var_dump(db_query("SELECT * FROM {registry}")->fetchAllKeyed());
-    var_dump(db_query("SELECT filename FROM {registry_file}")->fetchCol());
+    print_r(db_query("SELECT * FROM {registry}")->fetchAllAssoc('name'), TRUE);
+    print_r(db_query("SELECT filename FROM {registry_file}")->fetchCol(), TRUE);
   }
 
   /**
