@@ -60,8 +60,8 @@ script:
   - drush --yes dl registry_autoload
   - drush cc drush
   - drush rr
-  - drush sqlq "SELECT * FROM {registry}\G"
-  - drush sqlq "SELECT * FROM {registry_file}\G"
+  - drush sqlq "SELECT * FROM registry\G"
+  - drush sqlq "SELECT * FROM registry_file\G"
 
   # Enable the Plug modules
   - drush en --yes simpletest
