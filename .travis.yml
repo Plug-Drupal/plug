@@ -57,6 +57,8 @@ script:
 
   # Download and enable module and its dependencies
   - drush --yes dl registry_autoload
+  - drush --yes dl xautoload
+  - drush --yes pm-enable xautoload
 
   # Enable the Plug modules
   - drush en --yes simpletest
