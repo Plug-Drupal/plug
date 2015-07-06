@@ -25,41 +25,31 @@ env:
     # see: https://github.com/drush-ops/drush#install---composer
     - PATH="$PATH:$HOME/.composer/vendor/bin"
 
-    # Configuration vars.
+    # Drupal specific vars.
     - DRUPAL_TI_MODULE_NAME="plug"
     - DRUPAL_TI_SIMPLETEST_GROUP="Plug"
-
-    # Define runners and environment vars to include before and after the
-    # main runners / environment vars.
-    #- DRUPAL_TI_SCRIPT_DIR_BEFORE="./drupal_ti/before"
-    #- DRUPAL_TI_SCRIPT_DIR_AFTER="./drupal_ti/after"
-
-    # The environment to use, supported are: drupal-7, drupal-8
-    - DRUPAL_TI_ENVIRONMENT="drupal-7"
-
-    # Drupal specific vars.
     - DRUPAL_TI_DB="drupal_travis_db"
     - DRUPAL_TI_DB_URL="mysql://root:@127.0.0.1/drupal_travis_db"
     # Note: Do not add a trailing slash here.
     - DRUPAL_TI_WEBSERVER_URL="http://127.0.0.1"
     - DRUPAL_TI_WEBSERVER_PORT="8080"
 
-    # Simpletest specific commandline arguments, the DRUPAL_TI_SIMPLETEST_GROUP is appended at the end.
-    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT"
+    # Simpletest specific commandline arguments.
+    - DRUPAL_TI_SIMPLETEST_ARGS="--verbose --color --concurrency 4 --url $DRUPAL_TI_WEBSERVER_URL:$DRUPAL_TI_WEBSERVER_PORT $DRUPAL_TI_SIMPLETEST_GROUP"
 
     # PHPUnit specific commandline arguments.
     - DRUPAL_TI_PHPUNIT_ARGS=""
 
     # Code coverage via coveralls.io
-    - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
+    # - DRUPAL_TI_COVERAGE="satooshi/php-coveralls:0.6.*"
     # This needs to match your .coveralls.yml file.
-    - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
+    # - DRUPAL_TI_COVERAGE_FILE="build/logs/clover.xml"
 
     # Debug options
     #- DRUPAL_TI_DEBUG="-x -v"
 
   matrix:
-    # [[[ SELECT ANY OR MORE OPTIONS ]]]
+    # - DRUPAL_TI_RUNNERS="phpunit"
     - DRUPAL_TI_RUNNERS="simpletest"
 
 mysql:
@@ -69,15 +59,15 @@ mysql:
 
 before_install:
   - composer self-update
-  - composer global require "lionsad/drupal_ti:1.*"
+  - composer global require "lionsad/drupal_ti:dev-master"
   - drupal-ti before_install
 
 install:
   - drupal-ti install
-  - drush pm-enable --yes --root=/home/travis/build/Plug-Drupal/drupal-7/drupal plug_example
 
 before_script:
   - drupal-ti before_script
+  - drush pm-enable --yes --root=/home/travis/build/Plug-Drupal/drupal-7/drupal plug_example
 
 script:
   - drupal-ti script
