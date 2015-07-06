@@ -58,11 +58,6 @@ script:
   # Download and enable module and its dependencies
   - drush --yes dl registry_autoload
 
-  # Debugging Travis
-  - table=$(drush sqlq "SHOW TABLES LIKE 'simpletest%registry'"|grep -v Tables_in)
-  - drush sqlq "SELECT name FROM $table WHERE name LIKE 'Doctrine%'"
-  - drush sqlq "SELECT name FROM $table WHERE name LIKE 'Doctrine%'"
-
   # Enable the Plug modules
   - drush en --yes simpletest
   - drush --yes pm-enable plug plug_example

@@ -90,6 +90,10 @@ class BasicTest extends BaseTest {
    */
   public function setUp() {
     parent::setUp('registry_autoload', 'plug_example');
+    $sql = "SELECT name FROM {registry} WHERE name LIKE 'Doctrine%'";
+    print_r(db_query($sql)->fetchCol());
+    $sql = "SELECT filename FROM {registry_file} WHERE filename LIKE '%Doctrine%'";
+    print_r(db_query($sql)->fetchCol());
     // Get a new Name plugin manager to instantiate the test plugins.
     $this->manager = NamePluginManager::create();
   }
