@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains FallbackPluginManagerInterface.php.
+ * Contains \Drupal\Component\Plugin\FallbackPluginManagerInterface.
  */
 
 namespace Drupal\Component\Plugin;
@@ -13,7 +13,7 @@ namespace Drupal\Component\Plugin;
 interface FallbackPluginManagerInterface {
 
   /**
-   * Returns a fallback id for a missing plugin.
+   * Gets a fallback id for a missing plugin.
    *
    * @param string $plugin_id
    *   The ID of the missing requested plugin.

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains \Drupal\Component\Plugin\ContextAwarePluginBase
+ * Contains \Drupal\Component\Plugin\ContextAwarePluginBase.
  */
 
 namespace Drupal\Component\Plugin;
@@ -22,7 +22,7 @@ abstract class ContextAwarePluginBase extends PluginBase implements ContextAware
    *
    * @var \Drupal\Component\Plugin\Context\ContextInterface[]
    */
-  protected $context;
+  protected $context = [];
 
   /**
    * Overrides \Drupal\Component\Plugin\PluginBase::__construct().
