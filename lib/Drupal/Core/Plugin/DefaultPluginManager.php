@@ -2,16 +2,18 @@
 
 /**
  * @file
- * Contains \Drupal\Core\Plugin\DefaultPluginManager
+ * Contains \Drupal\Core\Plugin\DefaultPluginManager.
  */
 
 namespace Drupal\Core\Plugin;
 
 use Drupal\Component\Plugin\Discovery\CachedDiscoveryInterface;
 use Drupal\Component\Plugin\Discovery\DiscoveryCachedTrait;
+use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Component\Plugin\PluginManagerBase;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 
@@ -70,6 +72,28 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
   protected $useCaches = TRUE;
 
   /**
+   * The name of the annotation that contains the plugin definition.
+   *
+   * @var string
+   */
+  protected $pluginDefinitionAnnotationName;
+
+  /**
+   * The interface each plugin should implement.
+   *
+   * @var string|null
+   */
+  protected $pluginInterface;
+
+  /**
+   * An object that implements \Traversable which contains the root paths
+   * keyed by the corresponding namespace to look for plugin implementations.
+   *
+   * @var \Traversable
+   */
+  protected $namespaces;
+
+  /**
    * Creates the discovery object.
    *
    * @param string|bool $subdir
@@ -85,8 +109,9 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
    */
   public function __construct($subdir, \Traversable $namespaces, $plugin_interface = NULL, $plugin_definition_annotation_name = 'Drupal\Component\Annotation\Plugin') {
     $this->subdir = $subdir;
-    $this->discovery = new AnnotatedClassDiscovery($subdir, $namespaces, $plugin_definition_annotation_name);
-    $this->factory = new ContainerFactory($this, $plugin_interface);
+    $this->namespaces = $namespaces;
+    $this->pluginDefinitionAnnotationName = $plugin_definition_annotation_name;
+    $this->pluginInterface = $plugin_interface;
   }
 
   /**
@@ -213,13 +238,34 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function getDiscovery() {
+    if (!$this->discovery) {
+      $discovery = new AnnotatedClassDiscovery($this->subdir, $this->namespaces, $this->pluginDefinitionAnnotationName);
+      $this->discovery = new ContainerDerivativeDiscoveryDecorator($discovery);
+    }
+    return $this->discovery;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getFactory() {
+    if (!$this->factory) {
+      $this->factory = new ContainerFactory($this, $this->pluginInterface);
+    }
+    return $this->factory;
+  }
+
+  /**
    * Finds plugin definitions.
    *
    * @return array
    *   List of definitions to store in cache.
    */
   protected function findDefinitions() {
-    $definitions = $this->discovery->getDefinitions();
+    $definitions = $this->getDiscovery()->getDefinitions();
     foreach ($definitions as $plugin_id => &$definition) {
       $this->processDefinition($definition, $plugin_id);
     }
@@ -232,7 +278,7 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
       if (is_object($plugin_definition) && !($plugin_definition = (array) $plugin_definition)) {
         continue;
       }
-      if (isset($plugin_definition['provider']) && !in_array($plugin_definition['provider'], array('core', 'component')) && !module_exists($plugin_definition['provider'])) {
+      if (isset($plugin_definition['provider']) && !in_array($plugin_definition['provider'], array('core', 'component')) && !$this->providerExists($plugin_definition['provider'])) {
         unset($definitions[$plugin_id]);
       }
     }
@@ -249,6 +295,16 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
     if ($this->alterHook) {
       drupal_alter($this->alterHook, $definitions);
     }
+  }
+
+  /**
+   * Determines if the provider of a definition exists.
+   *
+   * @return boolean
+   *   TRUE if provider exists, FALSE otherwise.
+   */
+  protected function providerExists($provider) {
+    return module_exists($provider);
   }
 
 }
