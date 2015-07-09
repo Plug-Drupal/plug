@@ -7,13 +7,13 @@
 
 namespace Drupal\Core\Plugin;
 
+use Drupal\Component\FileCache\FileCacheFactory;
 use Drupal\Component\Plugin\Discovery\CachedDiscoveryInterface;
 use Drupal\Component\Plugin\Discovery\DiscoveryCachedTrait;
 use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Component\Plugin\PluginManagerBase;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\Discovery\AnnotatedClassDiscovery;
 use Drupal\Core\Plugin\Factory\ContainerFactory;
 
@@ -112,6 +112,21 @@ class DefaultPluginManager extends PluginManagerBase implements PluginManagerInt
     $this->namespaces = $namespaces;
     $this->pluginDefinitionAnnotationName = $plugin_definition_annotation_name;
     $this->pluginInterface = $plugin_interface;
+
+    // Add the file cache prefix.
+    $configuration['default'] = [
+      'class' => '\Drupal\Component\FileCache\FileCache',
+      'cache_backend_class' => NULL,
+      'cache_backend_configuration' => [],
+    ];
+    // @todo Use extension_loaded('apcu') for non-testbot
+    //  https://www.drupal.org/node/2447753.
+    if (function_exists('apc_fetch')) {
+      $configuration['default']['cache_backend_class'] = '\Drupal\Component\FileCache\ApcuFileCacheBackend';
+    }
+    FileCacheFactory::setConfiguration($configuration);
+    $identifier = 'file_cache';
+    FileCacheFactory::setPrefix('drupal.' . $identifier . '.' . hash_hmac('sha256', $identifier, drupal_get_hash_salt()));
   }
 
   /**
