@@ -1,4 +1,4 @@
-name = Plugs example
+name = Plug example
 description = A module example on how to use plugins.
 core = 7.x
 package = Plug
