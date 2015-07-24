@@ -11,7 +11,6 @@ use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Component\Plugin\LazyPluginCollection;
 use Drupal\Component\Plugin\PluginManagerInterface;
 use Drupal\Component\Plugin\ConfigurablePluginInterface;
-use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 
 /**
  * Provides a default plugin collection for a plugin type.
@@ -22,7 +21,6 @@ use Drupal\Core\DependencyInjection\DependencySerializationTrait;
  * self::$pluginKey.
  */
 class DefaultLazyPluginCollection extends LazyPluginCollection {
-  use DependencySerializationTrait;
 
   /**
    * The manager used to instantiate the plugins.
