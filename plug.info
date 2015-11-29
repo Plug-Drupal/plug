@@ -1,7 +1,7 @@
 name = Plug
 description = A port of the D8 plugin system.
 core = 7.x
-php = 5.4.2
+php = 5.5.9
 package = Plug
 dependencies[] = registry_autoload
 
