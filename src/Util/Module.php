@@ -59,7 +59,8 @@ class Module {
       return $data;
     }
     if ($cache = cache_get($cache_name)) {
-      return $cache->data;
+      $data = $cache->data;
+      return $data;
     }
     $data = call_user_func_array(array(get_called_class(), $method_name), array());
     cache_set($cache_name, $data);
