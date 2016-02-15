@@ -95,7 +95,7 @@ class DefaultFactory implements FactoryInterface {
     }
     else {
       $plugin_definition_type = is_object($plugin_definition) ? get_class($plugin_definition) : gettype($plugin_definition);
-      throw new PluginException(sprintf('%s can only handle plugin definitions that are arrays or that implement %s, but %s given.', __CLASS__, PluginDefinitionInterface::class, $plugin_definition_type));
+      throw new PluginException(sprintf('%s can only handle plugin definitions that are arrays or that implement \Drupal\Component\Plugin\Definition\PluginDefinitionInterface, but %s given.', __CLASS__, $plugin_definition_type));
     }
 
     if (!class_exists($class)) {
