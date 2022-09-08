@@ -19,11 +19,14 @@
 
 namespace Doctrine\Common\Reflection;
 
+use Doctrine\Common\Reflection\Compatibility\ReflectionClass as CompatibilityReflectionClass;
 use ReflectionClass;
 use ReflectionException;
 
 class StaticReflectionClass extends ReflectionClass
 {
+    use CompatibilityReflectionClass;
+
     /**
      * The static reflection parser object.
      *
@@ -99,14 +102,6 @@ class StaticReflectionClass extends ReflectionClass
      * {@inheritDoc}
      */
     public function getConstant($name)
-    {
-        throw new ReflectionException('Method not implemented');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getConstants()
     {
         throw new ReflectionException('Method not implemented');
     }
@@ -387,14 +382,6 @@ class StaticReflectionClass extends ReflectionClass
      * {@inheritDoc}
      */
     public function isUserDefined()
-    {
-        throw new ReflectionException('Method not implemented');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function newInstance($args)
     {
         throw new ReflectionException('Method not implemented');
     }
